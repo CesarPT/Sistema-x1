@@ -40,7 +40,8 @@ new
     Xocupado,
     BlockDuelo,
     tipoX1[100],
-	arma,
+	arma[200],
+	idarma,
 	texto[1024],
 	texto2[1024]
 ;
@@ -50,14 +51,14 @@ new
 
 CMD:tiposx1(playerid)
 {
-   ShowPlayerDialog(playerid, DIALOG_TIPOSX1, DIALOG_STYLE_LIST, "Tipos X1", "RUN\nWALK\n{FFFF00}Armas individuais\nMinigun", "Fechar", #);
+   ShowPlayerDialog(playerid, DIALOG_TIPOSX1, DIALOG_STYLE_LIST, "Tipos X1", "RUN 1\nWALK\n{FFFF00}Armas individuais\nMinigun", "Fechar", #);
 }
 
 
 
 CMD:x1(playerid, params[]){
 	new desafiado;
-	
+
 	//Verificações
 	if (Xocupado == 1) return SendClientMessage(playerid, 0xA9A9A9AA, "[INFO] O x1 já está ocupado. Aguarde até terminar.");
 	if (sscanf(params, "d", desafiado)) return SendClientMessage(playerid, 0xA9A9A9AA, "[ERRO] Insira um ID de jogador válido.");
@@ -71,7 +72,7 @@ CMD:x1(playerid, params[]){
 	GetPlayerName(pDesafiado, pDesafiadoNome, sizeof(pDesafiadoNome));
 
     //dialog escolha de arma + premio (1000 a 20k)
-    ShowPlayerDialog(playerid, DIALOG_X1, DIALOG_STYLE_LIST, "Tipos X1", "RUN\nWALK\n{FFFF00}Armas individuais\nMinigun", "Próximo", "Cancelar x1");
+    ShowPlayerDialog(playerid, DIALOG_X1, DIALOG_STYLE_LIST, "Tipos X1", "RUN\nWALK\n{FFFF00}Armas individuais\nArmas personalizadas", "Próximo", "Cancelar x1");
 
 
 	return 1;
@@ -86,6 +87,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]){
 	switch(listitem){
         case 2:
 		{
+		texto = "";
 		strcat(texto, "X1  - Armas individuais.\n\n\
 		~> Arma corpo a corpo\n\
 		Chainsaw (Motoserra)\n\
@@ -124,8 +126,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]){
 
    if(dialogid == DIALOG_TIPOSX1_2){
         if(response){ //Voltar
-        ShowPlayerDialog(playerid, DIALOG_TIPOSX1, DIALOG_STYLE_LIST, "Tipos X1", "RUN\nWALK\n{FFFF00}Armas individuais\nMinigun", "Fechar", #);
-            
+        ShowPlayerDialog(playerid, DIALOG_TIPOSX1, DIALOG_STYLE_LIST, "Tipos X1", "RUN\nWALK\n{FFFF00}Armas individuais\nArmas personalizadas", "Fechar", #);
+
 		return 1;
         }
         return 1;
@@ -136,15 +138,18 @@ if(dialogid == DIALOG_X1){
 
     switch(listitem){
         case 0:{
-		tipoX1 = "run";
+		tipoX1 = "run1";
+		arma = "Minigun";
 		duelo();
 		}
         case 1:{
 		tipoX1 = "walk";
+		arma = "Minigun";
 		duelo();
 		}
         case 2:{
 		tipoX1 = "individual";
+		texto2 = "";
 		strcat(texto2, "{FF00FF}Chainsaw (Motoserra)\n\
         {FFFFFF}Silenced Pistol\n\
 		{FFFFFF}Pistol\n\
@@ -153,19 +158,21 @@ if(dialogid == DIALOG_X1){
 		{FFFF00}Sawn-off Shotgun\n\
 		{FFFF00}Combat Shotgun\n\
 		{00FF00}Tec-9\n\
-		{00FF00}Micro SMG\n\
-		{00FF00}SMG\n\
+		{00FF00}UZI\n\
+		{00FF00}MP5\n\
 		{00FFFF}AK-47\n\
 		{00FFFF}M4\n\
-        {558099}Sniper Rifle\n\
         {558099}Rifle\n\
+		{558099}Sniper Rifle\n\
 		{505050}Molotov Cocktail\n\
 		{505050}Frag Grenade");
 		ShowPlayerDialog(playerid, DIALOG_X1_2, DIALOG_STYLE_TABLIST, "Tipos de armas", texto2, "Duelo", "Cancelar x1");
 		}
-		
+
+		//dialog ativado/desativado
 	    case 3:{
-		tipoX1 = "minigun";
+		tipoX1 = "Armas personalizadas";
+		arma = "";
 		duelo();
 		}
    }
@@ -175,9 +182,28 @@ if(dialogid == DIALOG_X1){
 
 if(dialogid == DIALOG_X1_2){
 	if (response){
+		switch (listitem){
+
+		case 0: { idarma = 9; }
+		case 1: { idarma = 23; }
+		case 2: { idarma = 22; }
+		case 3: { idarma = 24; }
+		case 4: { idarma = 25; }
+		case 5: { idarma = 26; }
+		case 6: { idarma = 27; }
+		case 7: { idarma = 32; }
+		case 8: { idarma = 28; }
+		case 9: { idarma = 29; }
+		case 10: { idarma = 30; }
+		case 11: { idarma = 31; }
+		case 12: { idarma = 33; }
+		case 13: { idarma = 34; }
+		case 14: { idarma = 18; }
+		case 15: { idarma = 16; }
+
+		}
 
 	duelo(playerid);
-	return 1;
 	}
 
 return 1;
@@ -199,7 +225,7 @@ if(dialogid == rBox1) {
             TextDrawShowForPlayer(i, textoX1);
         }
 */
-		Xocupado = 1;
+		//Xocupado = 1;
 
 	//Jogador convidou
 	SetPlayerPos(pConvidou, 1363.5077,-20.3402,1000.9219);
@@ -209,6 +235,7 @@ if(dialogid == rBox1) {
     ResetPlayerWeapons(pConvidou);
     SetPlayerTeam(pConvidou, 255);
    	SetPlayerHealth(pConvidou, 100);
+   	SetPlayerTeam(pDesafiado, 254);
 
 	//Jogador desafiado
     SetPlayerPos(pDesafiado, 1413.5077,-20.3402,1000.9219);
@@ -218,11 +245,17 @@ if(dialogid == rBox1) {
     ResetPlayerWeapons(pDesafiado);
     SetPlayerTeam(pDesafiado, 255);
    	SetPlayerHealth(pDesafiado, 100);
-   	
+   	SetPlayerTeam(pDesafiado, 255);
+
+	if (tipoX1 = "individual"){
+		GivePlayerWeapon(pConvidou, idarma, 1000);
+ 		GivePlayerWeapon(pDesafiado, idarma, 1000);
+	}
+
     CounterCountdown = 6;
     timeId = SetTimer("count_x1", 1000, true);
     return 1;
-    
+
 	} else {
         SendClientMessage(pConvidou, 0xA9A9A9AA, "[INFO] O jogador não aceitou o duelo.");
     }
@@ -245,10 +278,10 @@ duelo(playerid){
     format(texto, sizeof(texto), "Você convidou o jogador %s para um duelo x1. Aguarde pela resposta.", pConvidouNome);
 	SendClientMessage(playerid, -1, texto);
     SendClientMessage(playerid, 0xA9A9A9AA, "[AVISO] Se ele não aceitar o convite em 10 segundos, você é spawnado.");
-    
+
 	//Mensagem para o convidado
 	GameTextForPlayer(pDesafiado, "~b~~h~Aguardando Resposta~w~...",2000,3);
-    ShowPlayerDialog(pDesafiado, rBox1, DIALOG_STYLE_MSGBOX, "X1 - Convite", sprintf("{B9BCCC}- Você foi convidado pelo jogador {6495ED}%s{B9BCCC} para um desafio (x1).\n\nTipo de x1: {A52A2A}%s\n\n{B9BCCC}Armas: %s\n\n{6495ED}[Prêmio: R$ ]{B9BCCC} *\n\n - Você aceita?", pConvidouNome, tipoX1, arma), "Sim", "Não");
+    ShowPlayerDialog(pDesafiado, rBox1, DIALOG_STYLE_MSGBOX, "X1 - Convite", sprintf("{B9BCCC}- Você foi convidado pelo jogador {6495ED}%s{B9BCCC} para um desafio (x1).\nTipo de x1: {A52A2A}%s\n\n{B9BCCC}Armas: teste aaaaaaaaaaaaaaaaaaaaaaaaa \n[Prêmio: R$ ]{B9BCCC} *\n\n - Você aceita?", pConvidouNome, tipoX1), "Sim", "Não");
 }
 
 
