@@ -28,6 +28,8 @@
 #define DIALOG_X1_2 4
 #define rBox1      5452 // Cuidado conflitos.
 
+#pragma warning disable 239
+
 new CounterCountdown, timeId;
 
 //==============================================================================
@@ -37,13 +39,23 @@ new
     pConvidouNome[MAX_PLAYER_NAME + 1],
     pDesafiado,
     pDesafiadoNome[MAX_PLAYER_NAME + 1],
+//Vida e colete
+    Float:vida,
+    Float:colete,
+	vConvidou,
+	cConvidou,
+	vDesafiado,
+	cDesafiado,
+//Valores do x1
     Xocupado,
     BlockDuelo,
     tipoX1[100],
 	arma[200],
 	idarma,
 	texto[1024],
-	texto2[1024]
+	texto2[1024],
+//Valores de funcoes criadas
+	estado
 ;
 
 
@@ -138,13 +150,13 @@ if(dialogid == DIALOG_X1){
 
     switch(listitem){
         case 0:{
-		tipoX1 = "run1";
-		arma = "Minigun";
+		tipoX1 = "run";
+		arma = "9mm Pistol, Sawn-Off Shotgun, Tec9";
 		duelo();
 		}
         case 1:{
 		tipoX1 = "walk";
-		arma = "Minigun";
+		arma = "Desert Eagle, Shotgun, MP5, AK47, Sniper Rifle";
 		duelo();
 		}
         case 2:{
@@ -184,22 +196,22 @@ if(dialogid == DIALOG_X1_2){
 	if (response){
 		switch (listitem){
 
-		case 0: { idarma = 9; }
-		case 1: { idarma = 23; }
-		case 2: { idarma = 22; }
-		case 3: { idarma = 24; }
-		case 4: { idarma = 25; }
-		case 5: { idarma = 26; }
-		case 6: { idarma = 27; }
-		case 7: { idarma = 32; }
-		case 8: { idarma = 28; }
-		case 9: { idarma = 29; }
-		case 10: { idarma = 30; }
-		case 11: { idarma = 31; }
-		case 12: { idarma = 33; }
-		case 13: { idarma = 34; }
-		case 14: { idarma = 18; }
-		case 15: { idarma = 16; }
+		case 0: {  idarma = 9;  arma = "Chainsaw (Motoserra)"; }
+		case 1: {  idarma = 23; arma = "Silenced Pistol"; }
+		case 2: {  idarma = 22; arma = "Pistol"; }
+		case 3: {  idarma = 24; arma = "Desert Eagle"; }
+		case 4: {  idarma = 25; arma = "Shotgun"; }
+		case 5: {  idarma = 26; arma = "Sawn-off Shotgun"; }
+		case 6: {  idarma = 27; arma = "Combat Shotgun"; }
+		case 7: {  idarma = 32; arma = "Tec-9"; }
+		case 8: {  idarma = 28; arma = "UZI"; }
+		case 9: {  idarma = 29; arma = "MP5"; }
+		case 10: { idarma = 30; arma = "AK-47"; }
+		case 11: { idarma = 31; arma = "M4"; }
+		case 12: { idarma = 33; arma = "Rifle"; }
+		case 13: { idarma = 34; arma = "Sniper Rifle"; }
+		case 14: { idarma = 18; arma = "Molotov Cocktail"; }
+		case 15: { idarma = 16; arma = "Frag Grenade"; }
 
 		}
 
@@ -218,14 +230,15 @@ if(dialogid == rBox1) {
  	// ACEITOU O DUELO
     if(response) {
 		if (Xocupado == 1) return SendClientMessage(pConvidou, 0xA9A9A9AA, "[INFO] O x1 já está ocupado. Aguarde até terminar.");
-        SendClientMessageToAll(0x39FF14FF, sprintf("[X1 %s] O jogador %s aceitou o x1 de %s.", tipoX1, pDesafiadoNome, pConvidouNome));
-
-/*
+        SendClientMessageToAll(0x1357FFFF, sprintf("*************** DUELO X1 ***************"));
+        SendClientMessageToAll(0x1357FFFF, sprintf("| [X1 %s] O jogador %s aceitou o x1 de %s.", tipoX1, pDesafiadoNome, pConvidouNome));
+        SendClientMessageToAll(0x1357FFFF, sprintf("| [Armas] %s", arma));
+/*[X1 %s] O jogador %s (V: %0.2f C: %0.2f ) venceu o jogador %s (V: %0.2f C: %0.2f) no x1.
         foreach(new i : Player) {
             TextDrawShowForPlayer(i, textoX1);
         }
 */
-		//Xocupado = 1;
+		Xocupado = 1;
 
 	//Jogador convidou
 	SetPlayerPos(pConvidou, 1363.5077,-20.3402,1000.9219);
@@ -265,8 +278,60 @@ if(dialogid == rBox1) {
 }
 
 
+/*==============================================================================
+CALLBACKS CRIADAS
+==============================================================================*/
 
 
+public OnPlayerDisconnect(playerid, reason)
+{
+    new
+        szString[64],
+        playerName[MAX_PLAYER_NAME];
+
+    GetPlayerName(playerid, playerName, MAX_PLAYER_NAME);
+
+	if (pConvidou == playerid){
+	    format(szString, sizeof szString, "O duelo x1 foi terminado porque o jogador %s saiu.", pConvidouNome);
+	    SendClientMessageToAll(0x1357A6FF, szString);
+	    estado = 1;
+		resetX1();
+
+	} else if (pDesafiado == playerid){
+		format(szString, sizeof szString, "O duelo x1 foi terminado porque o jogador %s saiu.", pDesafiadoNome);
+        SendClientMessageToAll(0x1357A6FF, szString);
+        estado = 0;
+ 	    resetX1();
+        
+	}
+	return 1;
+}
+
+public OnPlayerDeath(playerid, killerid, reason)
+{
+
+    // Check that the killerid is valid before doing anything with it
+    if (killerid != INVALID_PLAYER_ID)
+    {
+    GetPlayerHealth(killerid, vida);
+    GetPlayerArmour(killerid, colete);
+
+        if (pConvidou == killerid){
+          SendClientMessageToAll(0x1357FFFF, sprintf("[X1 %s] O jogador %s (V: %0.2f C: %0.2f ) venceu o jogador %s no x1.", tipoX1, pConvidouNome, vida, colete, pDesafiadoNome));
+      	  SendClientMessageToAll(0x1357FFFF, sprintf("*************** DUELO X1 ***************"));
+      	  	estado = 0;
+          	resetX1();
+        } else if (pDesafiado == killerid){
+          SendClientMessageToAll(0x1357FFFF, sprintf("[X1 %s] O jogador %s (V: %0.2f C: %0.2f ) venceu o jogador %s no x1.", tipoX1, pDesafiadoNome, vida, colete, pConvidouNome));
+      	  SendClientMessageToAll(0x1357FFFF, sprintf("*************** DUELO X1 ***************"));
+			estado = 1;
+			resetX1();
+        }
+    }
+
+
+    return 1;
+}
 
 /*==============================================================================
 FUNÇÕES CRIADAS
@@ -275,16 +340,29 @@ FUNÇÕES CRIADAS
 
 duelo(playerid){
     // O jogador inseriu um ID válido
-    format(texto, sizeof(texto), "Você convidou o jogador %s para um duelo x1. Aguarde pela resposta.", pConvidouNome);
+    format(texto, sizeof(texto), "Você convidou o jogador %s para um duelo x1. Aguarde pela resposta.", pDesafiadoNome);
 	SendClientMessage(playerid, -1, texto);
     SendClientMessage(playerid, 0xA9A9A9AA, "[AVISO] Se ele não aceitar o convite em 10 segundos, você é spawnado.");
 
 	//Mensagem para o convidado
 	GameTextForPlayer(pDesafiado, "~b~~h~Aguardando Resposta~w~...",2000,3);
-    ShowPlayerDialog(pDesafiado, rBox1, DIALOG_STYLE_MSGBOX, "X1 - Convite", sprintf("{B9BCCC}- Você foi convidado pelo jogador {6495ED}%s{B9BCCC} para um desafio (x1).\nTipo de x1: {A52A2A}%s\n\n{B9BCCC}Armas: teste aaaaaaaaaaaaaaaaaaaaaaaaa \n[Prêmio: R$ ]{B9BCCC} *\n\n - Você aceita?", pConvidouNome, tipoX1), "Sim", "Não");
+    ShowPlayerDialog(pDesafiado, rBox1, DIALOG_STYLE_MSGBOX, "X1 - Convite", sprintf("{B9BCCC}- Você foi convidado pelo jogador {6495ED}%s{B9BCCC} para um desafio (x1).\nTipo de x1: {A52A2A}%s\n\n{B9BCCC}Armas: %s \n[Prêmio: R$ ]{B9BCCC} *\n\n - Você aceita?", pConvidouNome, tipoX1, arma), "Sim", "Não");
 }
 
 
+resetX1(){
+ 	if (estado == 0) {
+	SetPlayerPos(pConvidou, 0.0, 0.0, 3.0);
+	SetPlayerInterior(pConvidou, 0);
+	} else {
+	SetPlayerPos(pDesafiado, 0.0, 0.0, 3.0);
+	SetPlayerInterior(pDesafiado, 0);
+	}
+	pConvidou = -1;
+	pDesafiado = -1;
+	Xocupado = 0;
+	return 1;
+}
 
 
 forward count_x1();
@@ -300,6 +378,8 @@ public count_x1()
         format(string, sizeof(string), "%i", CounterCountdown);
         GameTextForPlayer(pConvidou, string, 999, 5);
         GameTextForPlayer(pDesafiado, string, 999, 5);
+        PlayerPlaySound(pConvidou, 1056, 0.0, 0.0, 0.0);
+   	    PlayerPlaySound(pDesafiado, 1056, 0.0, 0.0, 0.0);
     }
 
     if(CounterCountdown == 0)
@@ -307,6 +387,8 @@ public count_x1()
         format( string, sizeof(string), "~w~GO GO GO");
     	GameTextForPlayer(pConvidou, string, 500, 3 );
     	GameTextForPlayer(pDesafiado, string, 500, 3 );
+   	    PlayerPlaySound(pConvidou, 1057, 0.0, 0.0, 0.0);
+   	    PlayerPlaySound(pDesafiado, 1057, 0.0, 0.0, 0.0);
         TogglePlayerControllable(pConvidou, true);
         TogglePlayerControllable(pDesafiado, true);
         KillTimer(timeId);
