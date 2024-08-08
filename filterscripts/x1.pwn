@@ -17,6 +17,7 @@
 #include "../../include/pawncmd.inc"
 #include "../../include/strlib.inc"
 #include "../../include/foreach.inc"
+#include "../../include/FCNPC.inc"
 
 //==============================================================================
 
@@ -24,8 +25,9 @@
 
 #define DIALOG_TIPOSX1 1
 #define DIALOG_TIPOSX1_2 2
-#define DIALOG_X1 3
-#define DIALOG_X1_2 4
+#define DIALOG_TIPOSX1_3 3
+#define DIALOG_X1 4
+#define DIALOG_X1_2 5
 #define rBox1      5452 // Cuidado conflitos.
 
 #pragma warning disable 239
@@ -130,13 +132,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]){
 		~> Explosivos\n\
 		Molotov Cocktail\n\
 		Frag Grenade");
-		ShowPlayerDialog(playerid, DIALOG_TIPOSX1_2, DIALOG_STYLE_MSGBOX, "Tipos de X1", texto, "Voltar", "Fechar");
+		ShowPlayerDialog(playerid, DIALOG_TIPOSX1_2, DIALOG_STYLE_MSGBOX, "Tipos de X1", texto, "Voltar", "Cancelar");
 		}
    }
 	return 1;
    }
 
-   if(dialogid == DIALOG_TIPOSX1_2){
+   if(dialogid == DIALOG_TIPOSX1_2 || dialogid == DIALOG_TIPOSX1_3){
         if(response){ //Voltar
         ShowPlayerDialog(playerid, DIALOG_TIPOSX1, DIALOG_STYLE_LIST, "Tipos X1", "RUN\nWALK\n{FFFF00}Armas individuais\nArmas personalizadas", "Fechar", #);
 
@@ -144,6 +146,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]){
         }
         return 1;
    }
+   
 
 
 if(dialogid == DIALOG_X1){
@@ -180,12 +183,28 @@ if(dialogid == DIALOG_X1){
 		{505050}Frag Grenade");
 		ShowPlayerDialog(playerid, DIALOG_X1_2, DIALOG_STYLE_TABLIST, "Tipos de armas", texto2, "Duelo", "Cancelar x1");
 		}
-
-		//dialog ativado/desativado
+		//dialog armas personalizadas: ativado/desativado
 	    case 3:{
-		tipoX1 = "Armas personalizadas";
+		ShowPlayerDialog(playerid, DIALOG_TIPOSX1_3, DIALOG_STYLE_TABLIST_HEADERS, "X1 Armas personalizadas", "Arma\tEstado\n\
+		Chainsaw (Motoserra)\t{FF0000}Desativado\n\
+		Silenced Pistol\t{FF0000}Desativado\n\
+		Pistol\t{FF0000}Desativado\n\
+		Desert Eagle\t{FF0000}Desativado\n\
+		Shotgun\t{FF0000}Desativado\n\
+		Sawn-off Shotgun\t{FF0000}Desativado\n\
+		Combat Shotgun\t{FF0000}Desativado\n\
+		Tec-9\t{FF0000}Desativado\n\
+		UZI\t{FF0000}Desativado\n\
+		MP5\t{FF0000}Desativado\n\
+		AK-47\t{FF0000}Desativado\n\
+		M4\t{FF0000}Desativado\n\
+		Rifle\t{FF0000}Desativado\n\
+		Sniper Rifle\t{FF0000}Desativado\n\
+		Molotov Cocktail\t{FF0000}Desativado\n\
+		Frag Grenade\t{FF0000}Desativado", "Iniciar x1", "Cancelar");
+		tipoX1 = "Personalizado";
 		arma = "";
-		duelo();
+		//duelo();
 		}
    }
 
@@ -241,20 +260,20 @@ if(dialogid == rBox1) {
 		Xocupado = 1;
 
 	//Jogador convidou
-	SetPlayerPos(pConvidou, 1363.5077,-20.3402,1000.9219);
-    SetPlayerInterior(pConvidou, 1);
+	SetPlayerPos(pConvidou, -1415.230468, 1246.040283, 1040);
+    SetPlayerInterior(pConvidou, 16);
     TogglePlayerControllable(pConvidou, false);
-   	SetPlayerFacingAngle(pConvidou, 30);
+   	SetPlayerFacingAngle(pConvidou, 269.655395);
     ResetPlayerWeapons(pConvidou);
     SetPlayerTeam(pConvidou, 255);
    	SetPlayerHealth(pConvidou, 100);
    	SetPlayerTeam(pDesafiado, 254);
 
 	//Jogador desafiado
-    SetPlayerPos(pDesafiado, 1413.5077,-20.3402,1000.9219);
-    SetPlayerInterior(pDesafiado, 1);
+    SetPlayerPos(pDesafiado, -1380.088745, 1245.889404, 1040);
+    SetPlayerInterior(pDesafiado, 16);
     TogglePlayerControllable(pDesafiado, false);
-   	SetPlayerFacingAngle(pDesafiado, -30);
+   	SetPlayerFacingAngle(pDesafiado, 87.003707);
     ResetPlayerWeapons(pDesafiado);
     SetPlayerTeam(pDesafiado, 255);
    	SetPlayerHealth(pDesafiado, 100);
@@ -330,6 +349,12 @@ public OnPlayerDeath(playerid, killerid, reason)
     }
 
 
+    return 1;
+}
+
+public OnGameModeInit()
+{
+    ConnectNPC("[BOT]Pilot", "pilot");
     return 1;
 }
 
