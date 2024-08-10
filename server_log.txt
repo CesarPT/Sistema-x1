@@ -23249,3 +23249,549 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [19:20:39] Number of vehicle models: 173
 [19:20:51] [connection] incoming connection: 127.0.0.1:52379 id: 0
 [19:20:52] [join] Cesar_PT has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[19:29:04] 
+[19:29:04] Server Plugins
+[19:29:04] --------------
+[19:29:04]  Loading plugin: pawncmd
+[19:29:04] [Pawn.CMD] plugin v3.4.0 loading...
+[19:29:04] [Pawn.CMD] 
+
+    | Pawn.CMD 3.4.0 | 2016 - 2023
+    |--------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Feb 12 2023 at 18:12:31
+    |--------------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD
+
+[19:29:04]   Loaded.
+[19:29:04]  Loading plugin: sscanf
+[19:29:04] 
+[19:29:04]  ===============================
+[19:29:04] 
+[19:29:04]       sscanf plugin loaded.     
+[19:29:04] 
+[19:29:04]          Version: 2.13.8
+[19:29:04] 
+[19:29:04]    (c) 2022 Alex "Y_Less" Cole  
+[19:29:04] 
+[19:29:04]  ===============================
+[19:29:04] 
+[19:29:04]   Loaded.
+[19:29:04]  Loading plugin: FCNPC
+[19:29:04] 
+[19:29:04] -------------------------------------------------
+[19:29:04]      FCNPC - Fully Controllable NPC v2.0.10
+[19:29:04]             Windows SA-MP 0.3.7 R2
+[19:29:04]            Jun 27 2024 at 09:17:04
+[19:29:04] 
+[19:29:04]   Author:       OrMisicL (2013 - 2015)
+[19:29:04]   Continued by: ziggi    (2016 - present)
+[19:29:04] 
+[19:29:04]   See full credits in the README.md file
+[19:29:04] -------------------------------------------------
+[19:29:04] 
+[19:29:04] Loading...
+[19:29:04] 
+[19:29:04] -------------------------------------------------
+[19:29:04]    ColAndreasv1.4.0
+[19:29:04] 
+[19:29:04]    Created By:
+[19:29:04]      [uL]Chris42O
+[19:29:04]      [uL]Slice
+[19:29:04]      [uL]Pottus
+[19:29:04] -------------------------------------------------
+[19:29:04] 
+[19:29:04] Loading...
+[19:29:04] ColAndreas v1.4.0 Loaded.
+[19:29:04]   Loaded.
+[19:29:04]  Loaded 3 plugins.
+
+[19:29:04] 
+[19:29:04] Filterscripts
+[19:29:04] ---------------
+[19:29:04]   Loading filterscript 'x1.amx'...
+[19:29:04] No collision data found.
+[19:29:04]   Loading filterscript 'gl_actions.amx'...
+[19:29:04]   Loading filterscript 'gl_realtime.amx'...
+[19:29:04]   Loading filterscript 'gl_property.amx'...
+[19:29:04] 
+-----------------------------------
+[19:29:04] Grand Larceny Property Filterscript		
+[19:29:04] -----------------------------------
+
+[19:29:04]   Loading filterscript 'gl_mapicon.amx'...
+[19:29:04]   Loading filterscript 'ls_elevator.amx'...
+[19:29:04]   Loading filterscript 'attachments.amx'...
+[19:29:04]   Loading filterscript 'skinchanger.amx'...
+[19:29:04] 
+--Admin Player Skin Changer Loaded
+
+[19:29:04]   Loading filterscript 'vspawner.amx'...
+[19:29:04] 
+--Admin Vehicle Spawner Loaded
+
+[19:29:04]   Loading filterscript 'ls_mall.amx'...
+[19:29:04]   Loading filterscript 'ls_beachside.amx'...
+[19:29:04] 
+
+[19:29:04]   |---------------------------------------------------
+[19:29:04]   |--- LS BeachSide Filterscript
+[19:29:04]   |--  Script v1.03
+[19:29:04]   |--  19th April 2015
+[19:29:04]   |---------------------------------------------------
+[19:29:04]   |--  LS BeachSide Building Elevator created
+[19:29:04]   |---------------------------------------------------
+[19:29:04]   Loaded 11 filterscripts.
+
+[19:29:04] Loaded 3 vehicles from: vehicles/trains.txt
+[19:29:04] Loaded 3 vehicles from: vehicles/pilots.txt
+[19:29:04] Loaded 15 vehicles from: vehicles/lv_law.txt
+[19:29:04] Loaded 39 vehicles from: vehicles/lv_airport.txt
+[19:29:04] Loaded 255 vehicles from: vehicles/lv_gen.txt
+[19:29:04] Loaded 38 vehicles from: vehicles/sf_law.txt
+[19:29:04] Loaded 35 vehicles from: vehicles/sf_airport.txt
+[19:29:04] Loaded 353 vehicles from: vehicles/sf_gen.txt
+[19:29:04] Loaded 24 vehicles from: vehicles/ls_law.txt
+[19:29:04] Loaded 37 vehicles from: vehicles/ls_airport.txt
+[19:29:04] Loaded 98 vehicles from: vehicles/ls_gen_inner.txt
+[19:29:04] Loaded 389 vehicles from: vehicles/ls_gen_outer.txt
+[19:29:04] Loaded 71 vehicles from: vehicles/whetstone.txt
+[19:29:04] Loaded 168 vehicles from: vehicles/bone.txt
+[19:29:04] Loaded 61 vehicles from: vehicles/flint.txt
+[19:29:04] Loaded 96 vehicles from: vehicles/tierra.txt
+[19:29:04] Loaded 96 vehicles from: vehicles/red_county.txt
+[19:29:04] Total vehicles from files: 1781
+[19:29:04] Reading File: blank
+[19:29:04] Reading File: properties/houses.txt
+[19:29:04] Reading File: properties/businesses.txt
+[19:29:04] Reading File: properties/banks.txt
+[19:29:04] Reading File: properties/police.txt
+[19:29:04] 
+---------------------------------------
+[19:29:04] Running Grand Larceny - by the SA-MP team
+
+[19:29:04] ---------------------------------------
+
+[19:29:04] Number of vehicle models: 173
+[19:29:06] [connection] incoming connection: 127.0.0.1:54808 id: 0
+[19:29:07] [join] Cesar_PT has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[19:42:50] 
+[19:42:50] Server Plugins
+[19:42:50] --------------
+[19:42:50]  Loading plugin: pawncmd
+[19:42:50] [Pawn.CMD] plugin v3.4.0 loading...
+[19:42:50] [Pawn.CMD] 
+
+    | Pawn.CMD 3.4.0 | 2016 - 2023
+    |--------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Feb 12 2023 at 18:12:31
+    |--------------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD
+
+[19:42:50]   Loaded.
+[19:42:50]  Loading plugin: sscanf
+[19:42:50] 
+[19:42:50]  ===============================
+[19:42:50] 
+[19:42:50]       sscanf plugin loaded.     
+[19:42:50] 
+[19:42:50]          Version: 2.13.8
+[19:42:50] 
+[19:42:50]    (c) 2022 Alex "Y_Less" Cole  
+[19:42:50] 
+[19:42:50]  ===============================
+[19:42:50] 
+[19:42:50]   Loaded.
+[19:42:50]  Loading plugin: FCNPC
+[19:42:50] 
+[19:42:50] -------------------------------------------------
+[19:42:50]      FCNPC - Fully Controllable NPC v2.0.10
+[19:42:50]             Windows SA-MP 0.3.7 R2
+[19:42:50]            Jun 27 2024 at 09:17:04
+[19:42:50] 
+[19:42:50]   Author:       OrMisicL (2013 - 2015)
+[19:42:50]   Continued by: ziggi    (2016 - present)
+[19:42:50] 
+[19:42:50]   See full credits in the README.md file
+[19:42:50] -------------------------------------------------
+[19:42:50] 
+[19:42:50] Loading...
+[19:42:50] 
+[19:42:50] -------------------------------------------------
+[19:42:50]    ColAndreasv1.4.0
+[19:42:50] 
+[19:42:50]    Created By:
+[19:42:50]      [uL]Chris42O
+[19:42:50]      [uL]Slice
+[19:42:50]      [uL]Pottus
+[19:42:50] -------------------------------------------------
+[19:42:50] 
+[19:42:50] Loading...
+[19:42:50] ColAndreas v1.4.0 Loaded.
+[19:42:50]   Loaded.
+[19:42:50]  Loaded 3 plugins.
+
+[19:42:50] 
+[19:42:50] Filterscripts
+[19:42:50] ---------------
+[19:42:50]   Loading filterscript 'x1.amx'...
+[19:42:50] No collision data found.
+[19:42:50]   Loading filterscript 'gl_actions.amx'...
+[19:42:50]   Loading filterscript 'gl_realtime.amx'...
+[19:42:50]   Loading filterscript 'gl_property.amx'...
+[19:42:50] 
+-----------------------------------
+[19:42:50] Grand Larceny Property Filterscript		
+[19:42:50] -----------------------------------
+
+[19:42:50]   Loading filterscript 'gl_mapicon.amx'...
+[19:42:50]   Loading filterscript 'ls_elevator.amx'...
+[19:42:50]   Loading filterscript 'attachments.amx'...
+[19:42:50]   Loading filterscript 'skinchanger.amx'...
+[19:42:50] 
+--Admin Player Skin Changer Loaded
+
+[19:42:50]   Loading filterscript 'vspawner.amx'...
+[19:42:50] 
+--Admin Vehicle Spawner Loaded
+
+[19:42:50]   Loading filterscript 'ls_mall.amx'...
+[19:42:50]   Loading filterscript 'ls_beachside.amx'...
+[19:42:50] 
+
+[19:42:50]   |---------------------------------------------------
+[19:42:50]   |--- LS BeachSide Filterscript
+[19:42:50]   |--  Script v1.03
+[19:42:50]   |--  19th April 2015
+[19:42:50]   |---------------------------------------------------
+[19:42:50]   |--  LS BeachSide Building Elevator created
+[19:42:50]   |---------------------------------------------------
+[19:42:50]   Loaded 11 filterscripts.
+
+[19:42:50] Loaded 3 vehicles from: vehicles/trains.txt
+[19:42:50] Loaded 3 vehicles from: vehicles/pilots.txt
+[19:42:50] Loaded 15 vehicles from: vehicles/lv_law.txt
+[19:42:50] Loaded 39 vehicles from: vehicles/lv_airport.txt
+[19:42:50] Loaded 255 vehicles from: vehicles/lv_gen.txt
+[19:42:50] Loaded 38 vehicles from: vehicles/sf_law.txt
+[19:42:50] Loaded 35 vehicles from: vehicles/sf_airport.txt
+[19:42:50] Loaded 353 vehicles from: vehicles/sf_gen.txt
+[19:42:50] Loaded 24 vehicles from: vehicles/ls_law.txt
+[19:42:50] Loaded 37 vehicles from: vehicles/ls_airport.txt
+[19:42:50] Loaded 98 vehicles from: vehicles/ls_gen_inner.txt
+[19:42:50] Loaded 389 vehicles from: vehicles/ls_gen_outer.txt
+[19:42:50] Loaded 71 vehicles from: vehicles/whetstone.txt
+[19:42:50] Loaded 168 vehicles from: vehicles/bone.txt
+[19:42:50] Loaded 61 vehicles from: vehicles/flint.txt
+[19:42:50] Loaded 96 vehicles from: vehicles/tierra.txt
+[19:42:50] Loaded 96 vehicles from: vehicles/red_county.txt
+[19:42:50] Total vehicles from files: 1781
+[19:42:50] Reading File: blank
+[19:42:50] Reading File: properties/houses.txt
+[19:42:50] Reading File: properties/businesses.txt
+[19:42:50] Reading File: properties/banks.txt
+[19:42:50] Reading File: properties/police.txt
+[19:42:50] 
+---------------------------------------
+[19:42:50] Running Grand Larceny - by the SA-MP team
+
+[19:42:50] ---------------------------------------
+
+[19:42:50] Number of vehicle models: 173
+[19:42:52] [connection] incoming connection: 127.0.0.1:49814 id: 0
+[19:42:52] [join] Cesar_PT has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[19:48:09] 
+[19:48:09] Server Plugins
+[19:48:09] --------------
+[19:48:09]  Loading plugin: pawncmd
+[19:48:09] [Pawn.CMD] plugin v3.4.0 loading...
+[19:48:09] [Pawn.CMD] 
+
+    | Pawn.CMD 3.4.0 | 2016 - 2023
+    |--------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Feb 12 2023 at 18:12:31
+    |--------------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD
+
+[19:48:09]   Loaded.
+[19:48:09]  Loading plugin: sscanf
+[19:48:09] 
+[19:48:09]  ===============================
+[19:48:09] 
+[19:48:09]       sscanf plugin loaded.     
+[19:48:09] 
+[19:48:09]          Version: 2.13.8
+[19:48:09] 
+[19:48:09]    (c) 2022 Alex "Y_Less" Cole  
+[19:48:09] 
+[19:48:09]  ===============================
+[19:48:09] 
+[19:48:09]   Loaded.
+[19:48:09]  Loading plugin: FCNPC
+[19:48:09] 
+[19:48:09] -------------------------------------------------
+[19:48:09]      FCNPC - Fully Controllable NPC v2.0.10
+[19:48:09]             Windows SA-MP 0.3.7 R2
+[19:48:09]            Jun 27 2024 at 09:17:04
+[19:48:09] 
+[19:48:09]   Author:       OrMisicL (2013 - 2015)
+[19:48:09]   Continued by: ziggi    (2016 - present)
+[19:48:09] 
+[19:48:09]   See full credits in the README.md file
+[19:48:09] -------------------------------------------------
+[19:48:09] 
+[19:48:09] Loading...
+[19:48:09] 
+[19:48:09] -------------------------------------------------
+[19:48:09]    ColAndreasv1.4.0
+[19:48:09] 
+[19:48:09]    Created By:
+[19:48:09]      [uL]Chris42O
+[19:48:09]      [uL]Slice
+[19:48:09]      [uL]Pottus
+[19:48:09] -------------------------------------------------
+[19:48:09] 
+[19:48:09] Loading...
+[19:48:09] ColAndreas v1.4.0 Loaded.
+[19:48:09]   Loaded.
+[19:48:09]  Loaded 3 plugins.
+
+[19:48:09] 
+[19:48:09] Filterscripts
+[19:48:09] ---------------
+[19:48:09]   Loading filterscript 'x1.amx'...
+[19:48:09] No collision data found.
+[19:48:09]   Loading filterscript 'gl_actions.amx'...
+[19:48:09]   Loading filterscript 'gl_realtime.amx'...
+[19:48:09]   Loading filterscript 'gl_property.amx'...
+[19:48:09] 
+-----------------------------------
+[19:48:09] Grand Larceny Property Filterscript		
+[19:48:09] -----------------------------------
+
+[19:48:09]   Loading filterscript 'gl_mapicon.amx'...
+[19:48:09]   Loading filterscript 'ls_elevator.amx'...
+[19:48:09]   Loading filterscript 'attachments.amx'...
+[19:48:09]   Loading filterscript 'skinchanger.amx'...
+[19:48:09] 
+--Admin Player Skin Changer Loaded
+
+[19:48:09]   Loading filterscript 'vspawner.amx'...
+[19:48:09] 
+--Admin Vehicle Spawner Loaded
+
+[19:48:09]   Loading filterscript 'ls_mall.amx'...
+[19:48:09]   Loading filterscript 'ls_beachside.amx'...
+[19:48:09] 
+
+[19:48:09]   |---------------------------------------------------
+[19:48:09]   |--- LS BeachSide Filterscript
+[19:48:09]   |--  Script v1.03
+[19:48:09]   |--  19th April 2015
+[19:48:09]   |---------------------------------------------------
+[19:48:09]   |--  LS BeachSide Building Elevator created
+[19:48:09]   |---------------------------------------------------
+[19:48:09]   Loaded 11 filterscripts.
+
+[19:48:09] Loaded 3 vehicles from: vehicles/trains.txt
+[19:48:09] Loaded 3 vehicles from: vehicles/pilots.txt
+[19:48:09] Loaded 15 vehicles from: vehicles/lv_law.txt
+[19:48:09] Loaded 39 vehicles from: vehicles/lv_airport.txt
+[19:48:09] Loaded 255 vehicles from: vehicles/lv_gen.txt
+[19:48:09] Loaded 38 vehicles from: vehicles/sf_law.txt
+[19:48:09] Loaded 35 vehicles from: vehicles/sf_airport.txt
+[19:48:09] Loaded 353 vehicles from: vehicles/sf_gen.txt
+[19:48:09] Loaded 24 vehicles from: vehicles/ls_law.txt
+[19:48:09] Loaded 37 vehicles from: vehicles/ls_airport.txt
+[19:48:09] Loaded 98 vehicles from: vehicles/ls_gen_inner.txt
+[19:48:09] Loaded 389 vehicles from: vehicles/ls_gen_outer.txt
+[19:48:09] Loaded 71 vehicles from: vehicles/whetstone.txt
+[19:48:09] Loaded 168 vehicles from: vehicles/bone.txt
+[19:48:09] Loaded 61 vehicles from: vehicles/flint.txt
+[19:48:09] Loaded 96 vehicles from: vehicles/tierra.txt
+[19:48:09] Loaded 96 vehicles from: vehicles/red_county.txt
+[19:48:09] Total vehicles from files: 1781
+[19:48:09] Reading File: blank
+[19:48:09] Reading File: properties/houses.txt
+[19:48:09] Reading File: properties/businesses.txt
+[19:48:09] Reading File: properties/banks.txt
+[19:48:09] Reading File: properties/police.txt
+[19:48:09] 
+---------------------------------------
+[19:48:09] Running Grand Larceny - by the SA-MP team
+
+[19:48:09] ---------------------------------------
+
+[19:48:09] Number of vehicle models: 173
+[19:48:18] [connection] incoming connection: 127.0.0.1:60907 id: 0
+[19:48:18] [join] Cesar_PT has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[20:08:50] 
+[20:08:50] Server Plugins
+[20:08:50] --------------
+[20:08:50]  Loading plugin: pawncmd
+[20:08:50] [Pawn.CMD] plugin v3.4.0 loading...
+[20:08:50] [Pawn.CMD] 
+
+    | Pawn.CMD 3.4.0 | 2016 - 2023
+    |--------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Feb 12 2023 at 18:12:31
+    |--------------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD
+
+[20:08:50]   Loaded.
+[20:08:50]  Loading plugin: sscanf
+[20:08:50] 
+[20:08:50]  ===============================
+[20:08:50] 
+[20:08:50]       sscanf plugin loaded.     
+[20:08:50] 
+[20:08:50]          Version: 2.13.8
+[20:08:50] 
+[20:08:50]    (c) 2022 Alex "Y_Less" Cole  
+[20:08:50] 
+[20:08:50]  ===============================
+[20:08:50] 
+[20:08:50]   Loaded.
+[20:08:50]  Loading plugin: FCNPC
+[20:08:50] 
+[20:08:50] -------------------------------------------------
+[20:08:50]      FCNPC - Fully Controllable NPC v2.0.10
+[20:08:50]             Windows SA-MP 0.3.7 R2
+[20:08:50]            Jun 27 2024 at 09:17:04
+[20:08:50] 
+[20:08:50]   Author:       OrMisicL (2013 - 2015)
+[20:08:50]   Continued by: ziggi    (2016 - present)
+[20:08:50] 
+[20:08:50]   See full credits in the README.md file
+[20:08:50] -------------------------------------------------
+[20:08:50] 
+[20:08:50] Loading...
+[20:08:50] 
+[20:08:50] -------------------------------------------------
+[20:08:50]    ColAndreasv1.4.0
+[20:08:50] 
+[20:08:50]    Created By:
+[20:08:50]      [uL]Chris42O
+[20:08:50]      [uL]Slice
+[20:08:50]      [uL]Pottus
+[20:08:50] -------------------------------------------------
+[20:08:50] 
+[20:08:50] Loading...
+[20:08:50] ColAndreas v1.4.0 Loaded.
+[20:08:50]   Loaded.
+[20:08:50]  Loaded 3 plugins.
+
+[20:08:50] 
+[20:08:50] Filterscripts
+[20:08:50] ---------------
+[20:08:50]   Loading filterscript 'x1.amx'...
+[20:08:50] No collision data found.
+[20:08:50]   Loading filterscript 'gl_actions.amx'...
+[20:08:50]   Loading filterscript 'gl_realtime.amx'...
+[20:08:50]   Loading filterscript 'gl_property.amx'...
+[20:08:50] 
+-----------------------------------
+[20:08:50] Grand Larceny Property Filterscript		
+[20:08:50] -----------------------------------
+
+[20:08:50]   Loading filterscript 'gl_mapicon.amx'...
+[20:08:50]   Loading filterscript 'ls_elevator.amx'...
+[20:08:50]   Loading filterscript 'attachments.amx'...
+[20:08:50]   Loading filterscript 'skinchanger.amx'...
+[20:08:50] 
+--Admin Player Skin Changer Loaded
+
+[20:08:50]   Loading filterscript 'vspawner.amx'...
+[20:08:50] 
+--Admin Vehicle Spawner Loaded
+
+[20:08:50]   Loading filterscript 'ls_mall.amx'...
+[20:08:50]   Loading filterscript 'ls_beachside.amx'...
+[20:08:50] 
+
+[20:08:50]   |---------------------------------------------------
+[20:08:50]   |--- LS BeachSide Filterscript
+[20:08:50]   |--  Script v1.03
+[20:08:50]   |--  19th April 2015
+[20:08:50]   |---------------------------------------------------
+[20:08:50]   |--  LS BeachSide Building Elevator created
+[20:08:50]   |---------------------------------------------------
+[20:08:50]   Loaded 11 filterscripts.
+
+[20:08:50] Loaded 3 vehicles from: vehicles/trains.txt
+[20:08:50] Loaded 3 vehicles from: vehicles/pilots.txt
+[20:08:50] Loaded 15 vehicles from: vehicles/lv_law.txt
+[20:08:50] Loaded 39 vehicles from: vehicles/lv_airport.txt
+[20:08:50] Loaded 255 vehicles from: vehicles/lv_gen.txt
+[20:08:50] Loaded 38 vehicles from: vehicles/sf_law.txt
+[20:08:50] Loaded 35 vehicles from: vehicles/sf_airport.txt
+[20:08:50] Loaded 353 vehicles from: vehicles/sf_gen.txt
+[20:08:50] Loaded 24 vehicles from: vehicles/ls_law.txt
+[20:08:50] Loaded 37 vehicles from: vehicles/ls_airport.txt
+[20:08:50] Loaded 98 vehicles from: vehicles/ls_gen_inner.txt
+[20:08:50] Loaded 389 vehicles from: vehicles/ls_gen_outer.txt
+[20:08:50] Loaded 71 vehicles from: vehicles/whetstone.txt
+[20:08:50] Loaded 168 vehicles from: vehicles/bone.txt
+[20:08:50] Loaded 61 vehicles from: vehicles/flint.txt
+[20:08:50] Loaded 96 vehicles from: vehicles/tierra.txt
+[20:08:50] Loaded 96 vehicles from: vehicles/red_county.txt
+[20:08:50] Total vehicles from files: 1781
+[20:08:50] Reading File: blank
+[20:08:50] Reading File: properties/houses.txt
+[20:08:50] Reading File: properties/businesses.txt
+[20:08:50] Reading File: properties/banks.txt
+[20:08:50] Reading File: properties/police.txt
+[20:08:50] 
+---------------------------------------
+[20:08:50] Running Grand Larceny - by the SA-MP team
+
+[20:08:50] ---------------------------------------
+
+[20:08:50] Number of vehicle models: 173

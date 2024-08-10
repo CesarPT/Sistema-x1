@@ -120,7 +120,7 @@ if (BlockDuelo != 0){
 
 CMD:tiposx1(playerid)
 {
-   ShowPlayerDialog(playerid, DIALOG_TIPOSX1, DIALOG_STYLE_LIST, "Tipos X1", "RUN 1\nWALK\n{FFFF00}Armas individuais\nMinigun", "Fechar", #);
+   ShowPlayerDialog(playerid, DIALOG_TIPOSX1, DIALOG_STYLE_LIST, "Tipos X1", "RUN\nWALK\n{FFFF00}Armas individuais\nMinigun", "Fechar", #);
 }
 
 
@@ -205,7 +205,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]){
 
 
 if(dialogid == DIALOG_X1){
-
+if (response) {
     switch(listitem){
         case 0:{
         tipoX1 = "run";
@@ -243,7 +243,7 @@ if(dialogid == DIALOG_X1){
 
 		}
    }
-
+}
     return 1;
 }
 
@@ -262,10 +262,10 @@ if(dialogid == DIALOG_X1_2){
 		case 9: {  Armas[9][ArmaEstado] = true; }
 		case 10: { Armas[10][ArmaEstado] = true; }
 		case 11: { Armas[11][ArmaEstado] = true; }
-		case 12: { Armas[11][ArmaEstado] = true; }
-		case 13: { Armas[12][ArmaEstado] = true; }
-		case 14: { Armas[13][ArmaEstado] = true; }
-		case 15: { Armas[14][ArmaEstado] = true; }
+		case 12: { Armas[12][ArmaEstado] = true; }
+		case 13: { Armas[13][ArmaEstado] = true; }
+		case 14: { Armas[14][ArmaEstado] = true; }
+		case 15: { Armas[15][ArmaEstado] = true; }
 
 		}
 
@@ -346,15 +346,34 @@ if(dialogid == rBox1) {
     SetPlayerTeam(pDesafiado, 255);
    	SetPlayerHealth(pDesafiado, 100);
    	SetPlayerTeam(pDesafiado, 255);
-
-	if (strcmpEx(tipoX1, "individual")){
+	if (strcmpEx(tipoX1, "run") == 0){
+		GivePlayerWeapon(pConvidou, 22, 1000);
+		GivePlayerWeapon(pConvidou, 26, 1000);
+		GivePlayerWeapon(pConvidou, 32, 1000);
+		GivePlayerWeapon(pDesafiado, 22, 1000);
+		GivePlayerWeapon(pDesafiado, 26, 1000);
+		GivePlayerWeapon(pDesafiado, 32, 1000);
+	}
+	if (strcmpEx(tipoX1, "walk") == 0){
+		GivePlayerWeapon(pConvidou, 24, 1000);
+		GivePlayerWeapon(pConvidou, 25, 1000);
+		GivePlayerWeapon(pConvidou, 29, 1000);
+		GivePlayerWeapon(pConvidou, 30, 1000);
+		GivePlayerWeapon(pConvidou, 34, 1000);
+		GivePlayerWeapon(pDesafiado, 24, 1000);
+		GivePlayerWeapon(pDesafiado, 25, 1000);
+		GivePlayerWeapon(pDesafiado, 29, 1000);
+		GivePlayerWeapon(pDesafiado, 30, 1000);
+		GivePlayerWeapon(pDesafiado, 34, 1000);
+	}
+	if (strcmpEx(tipoX1, "individual") == 0){
 		darArmas();
 	}
-	if (strcmpEx(tipoX1, "Personalizado")){
+	if (strcmpEx(tipoX1, "Personalizado") == 0){
   		darArmas();
 	}
 
-    CounterCountdown = 6;
+    CounterCountdown = 4;
     timeId = SetTimer("count_x1", 1000, true);
     return 1;
 
@@ -449,20 +468,20 @@ duelo(playerid){
 
 arma="";
 new buffer[400];
-	if (strcmpEx(tipoX1, "run")){
+	if (strcmpEx(tipoX1, "run") == 0){
 	    arma = "9mm Pistol, Sawn-Off Shotgun, Tec9";
-	 SendClientMessageToAll(0xFFFFFFFF, tipoX1, arma);
-	} else if (strcmpEx(tipoX1, "walk")){
+
+	} else if (strcmpEx(tipoX1, "walk") == 0){
 		arma = "Desert Eagle, Shotgun, MP5, AK47, Sniper Rifle";
-		SendClientMessageToAll(0xFFFFFFFF, tipoX1, arma);
-	} else if ( (strcmpEx(tipoX1, "individual")) || (strcmpEx(tipoX1, "Personalizado")) ){
+
+	} else if ( (strcmpEx(tipoX1, "individual") == 0) || (strcmpEx(tipoX1, "Personalizado") == 0) ){
 		for (new i=0; i<15; i++){
 				if (Armas[i][ArmaEstado] == 1){
 					format(buffer, sizeof(buffer), " - %s ", Armas[i][ArmaNome], " - ");
 					strcat(arma, buffer);
 				}
 		    }
-		    SendClientMessageToAll(0xFFFFFFFF, tipoX1, arma);
+
 	}
 	 // O jogador inseriu um ID válido
     format(texto, sizeof(texto), "Você convidou o jogador %s para um duelo x1. Aguarde pela resposta.", pDesafiadoNome);
@@ -508,15 +527,15 @@ public count_x1()
         CounterCountdown--;
 
         format(string, sizeof(string), "%i", CounterCountdown);
-        GameTextForPlayer(pConvidou, string, 999, 5);
-        GameTextForPlayer(pDesafiado, string, 999, 5);
+        GameTextForPlayer(pConvidou, string, 999, 3);
+        GameTextForPlayer(pDesafiado, string, 999, 3);
         PlayerPlaySound(pConvidou, 1056, 0.0, 0.0, 0.0);
    	    PlayerPlaySound(pDesafiado, 1056, 0.0, 0.0, 0.0);
     }
 
     if(CounterCountdown == 0)
     {
-        format( string, sizeof(string), "~w~GO GO GO");
+        format( string, sizeof(string), "~y~GO GO GO");
     	GameTextForPlayer(pConvidou, string, 500, 3 );
     	GameTextForPlayer(pDesafiado, string, 500, 3 );
    	    PlayerPlaySound(pConvidou, 1057, 0.0, 0.0, 0.0);
