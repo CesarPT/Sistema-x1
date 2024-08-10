@@ -28,11 +28,13 @@
 #define DIALOG_TIPOSX1_3 3
 #define DIALOG_X1 4
 #define DIALOG_X1_2 5
+#define DIALOG_X1_3 6
 #define rBox1      5452 // Cuidado conflitos.
 
 #pragma warning disable 239
 
 new CounterCountdown, timeId;
+
 
 //==============================================================================
 
@@ -50,16 +52,69 @@ new
 	cDesafiado,
 //Valores do x1
     Xocupado,
-    BlockDuelo,
+    BlockDuelo = 1,
     tipoX1[100],
 	arma[200],
-	idarma,
 	texto[1024],
 	texto2[1024],
+//Valores do dialog
+    armas[35] = false,
 //Valores de funcoes criadas
 	estado
 ;
 
+
+enum ArmaInfo {
+    ArmaID,         // ID da arma
+    ArmaNome[32],   // Nome da arma (até 31 chars + null terminator)
+    ArmaEstado          // Ativado/Desativado 1/0
+}
+
+new Armas[][ArmaInfo] = {
+    {9,  "Chainsaw (Motoserra)", 0},
+    {23, "Silenced Pistol", 0},
+    {22, "Pistol", 0},
+    {24, "Desert Eagle", 0},
+    {25, "Shotgun", 0},
+    {26, "Sawn-off Shotgun", 0},
+    {27, "Combat Shotgun", 0},
+    {32, "Tec-9", 0},
+    {28, "UZI", 0},
+    {29, "MP5", 0},
+    {30, "AK-47", 0},
+    {31, "M4", 0},
+    {33, "Rifle", 0},
+    {34, "Sniper Rifle", 0},
+    {18, "Molotov Cocktail", 0},
+    {16, "Frag Grenade", 0}
+};
+
+CMD:resetx1(playerid)
+{
+   resetX1();
+   SendClientMessage(playerid, 0xFF55FF55, "Os valores do x1 foram resetados.");
+}
+
+CMD:fecharx1(playerid)
+{
+if (BlockDuelo != 1){
+   BlockDuelo = 1;
+   SendClientMessageToAll(0xFF55FF55, "Os duelos x1 foram bloqueados.");
+} else {
+	SendClientMessage(playerid, 0xFF55FF55, "O x1 já está fechado.");
+}
+}
+
+CMD:abrirx1(playerid)
+{
+if (BlockDuelo != 0){
+
+   BlockDuelo = 0;
+   SendClientMessageToAll(0xFF55FF55, "Os duelos x1 foram liberados. Use /x1 id");
+} else {
+	SendClientMessage(playerid, 0xFF55FF55, "O x1 já está aberto.");
+}
+}
 
 
 
@@ -74,11 +129,11 @@ CMD:x1(playerid, params[]){
 	new desafiado;
 
 	//Verificações
-	if (Xocupado == 1) return SendClientMessage(playerid, 0xA9A9A9AA, "[INFO] O x1 já está ocupado. Aguarde até terminar.");
+	if(BlockDuelo == 1) return SendClientMessage(playerid, -1, "{FFFF00}[ERRO] {FF0000}O sistema de X1 está desativado pelo administrador.");
+	//if (Xocupado == 1) return SendClientMessage(playerid, 0xA9A9A9AA, "[INFO] O x1 já está ocupado. Aguarde até terminar.");
 	if (sscanf(params, "d", desafiado)) return SendClientMessage(playerid, 0xA9A9A9AA, "[ERRO] Insira um ID de jogador válido.");
 	//if (desafiado == playerid) return SendClientMessage(playerid, 0xA9A9A9AA, "[ERRO] Não pode duelar com você mesmo.");
 	if(!IsPlayerConnected(desafiado)) return SendClientMessage(playerid, 0xA9A9A9AA, "[ERRO] Jogador offline.");
-
 	pConvidou = playerid;
 	pDesafiado = desafiado;
 
@@ -139,7 +194,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]){
    }
 
    if(dialogid == DIALOG_TIPOSX1_2 || dialogid == DIALOG_TIPOSX1_3){
-        if(response){ //Voltar
+        if(response){
         ShowPlayerDialog(playerid, DIALOG_TIPOSX1, DIALOG_STYLE_LIST, "Tipos X1", "RUN\nWALK\n{FFFF00}Armas individuais\nArmas personalizadas", "Fechar", #);
 
 		return 1;
@@ -153,17 +208,15 @@ if(dialogid == DIALOG_X1){
 
     switch(listitem){
         case 0:{
-		tipoX1 = "run";
-		arma = "9mm Pistol, Sawn-Off Shotgun, Tec9";
-		duelo();
+        tipoX1 = "run";
+		duelo(playerid);
 		}
         case 1:{
-		tipoX1 = "walk";
-		arma = "Desert Eagle, Shotgun, MP5, AK47, Sniper Rifle";
-		duelo();
+        tipoX1 = "walk";
+		duelo(playerid);
 		}
         case 2:{
-		tipoX1 = "individual";
+        tipoX1 = "individual";
 		texto2 = "";
 		strcat(texto2, "{FF00FF}Chainsaw (Motoserra)\n\
         {FFFFFF}Silenced Pistol\n\
@@ -185,26 +238,9 @@ if(dialogid == DIALOG_X1){
 		}
 		//dialog armas personalizadas: ativado/desativado
 	    case 3:{
-		ShowPlayerDialog(playerid, DIALOG_TIPOSX1_3, DIALOG_STYLE_TABLIST_HEADERS, "X1 Armas personalizadas", "Arma\tEstado\n\
-		Chainsaw (Motoserra)\t{FF0000}Desativado\n\
-		Silenced Pistol\t{FF0000}Desativado\n\
-		Pistol\t{FF0000}Desativado\n\
-		Desert Eagle\t{FF0000}Desativado\n\
-		Shotgun\t{FF0000}Desativado\n\
-		Sawn-off Shotgun\t{FF0000}Desativado\n\
-		Combat Shotgun\t{FF0000}Desativado\n\
-		Tec-9\t{FF0000}Desativado\n\
-		UZI\t{FF0000}Desativado\n\
-		MP5\t{FF0000}Desativado\n\
-		AK-47\t{FF0000}Desativado\n\
-		M4\t{FF0000}Desativado\n\
-		Rifle\t{FF0000}Desativado\n\
-		Sniper Rifle\t{FF0000}Desativado\n\
-		Molotov Cocktail\t{FF0000}Desativado\n\
-		Frag Grenade\t{FF0000}Desativado", "Iniciar x1", "Cancelar");
 		tipoX1 = "Personalizado";
-		arma = "";
-		//duelo();
+		armasPers(playerid);
+
 		}
    }
 
@@ -214,32 +250,64 @@ if(dialogid == DIALOG_X1){
 if(dialogid == DIALOG_X1_2){
 	if (response){
 		switch (listitem){
-
-		case 0: {  idarma = 9;  arma = "Chainsaw (Motoserra)"; }
-		case 1: {  idarma = 23; arma = "Silenced Pistol"; }
-		case 2: {  idarma = 22; arma = "Pistol"; }
-		case 3: {  idarma = 24; arma = "Desert Eagle"; }
-		case 4: {  idarma = 25; arma = "Shotgun"; }
-		case 5: {  idarma = 26; arma = "Sawn-off Shotgun"; }
-		case 6: {  idarma = 27; arma = "Combat Shotgun"; }
-		case 7: {  idarma = 32; arma = "Tec-9"; }
-		case 8: {  idarma = 28; arma = "UZI"; }
-		case 9: {  idarma = 29; arma = "MP5"; }
-		case 10: { idarma = 30; arma = "AK-47"; }
-		case 11: { idarma = 31; arma = "M4"; }
-		case 12: { idarma = 33; arma = "Rifle"; }
-		case 13: { idarma = 34; arma = "Sniper Rifle"; }
-		case 14: { idarma = 18; arma = "Molotov Cocktail"; }
-		case 15: { idarma = 16; arma = "Frag Grenade"; }
+		case 0: {  Armas[0][ArmaEstado] = true; }
+		case 1: {  Armas[1][ArmaEstado] = true; }
+		case 2: {  Armas[2][ArmaEstado] = true; }
+		case 3: {  Armas[3][ArmaEstado] = true; }
+		case 4: {  Armas[4][ArmaEstado] = true; }
+		case 5: {  Armas[5][ArmaEstado] = true; }
+		case 6: {  Armas[6][ArmaEstado] = true; }
+		case 7: {  Armas[7][ArmaEstado] = true; }
+		case 8: {  Armas[8][ArmaEstado] = true; }
+		case 9: {  Armas[9][ArmaEstado] = true; }
+		case 10: { Armas[10][ArmaEstado] = true; }
+		case 11: { Armas[11][ArmaEstado] = true; }
+		case 12: { Armas[11][ArmaEstado] = true; }
+		case 13: { Armas[12][ArmaEstado] = true; }
+		case 14: { Armas[13][ArmaEstado] = true; }
+		case 15: { Armas[14][ArmaEstado] = true; }
 
 		}
 
 	duelo(playerid);
+	} else {
+		resetArmas();
 	}
 
 return 1;
 }
 
+
+if (dialogid == DIALOG_X1_3){
+if (response){
+	switch(listitem){
+		case 0: {Armas[0][ArmaEstado] = !Armas[0][ArmaEstado];armasPers(playerid);}
+		case 1: {Armas[1][ArmaEstado] = !Armas[1][ArmaEstado];armasPers(playerid);}
+		case 2: {Armas[2][ArmaEstado] = !Armas[2][ArmaEstado];armasPers(playerid);}
+		case 3: {Armas[3][ArmaEstado] = !Armas[3][ArmaEstado];armasPers(playerid);}
+		case 4: {Armas[4][ArmaEstado] = !Armas[4][ArmaEstado];armasPers(playerid);}
+		case 5: {Armas[5][ArmaEstado] = !Armas[5][ArmaEstado];armasPers(playerid);}
+		case 6: {Armas[6][ArmaEstado] = !Armas[6][ArmaEstado];armasPers(playerid);}
+		case 7: {Armas[7][ArmaEstado] = !Armas[7][ArmaEstado];armasPers(playerid);}
+		case 8: {Armas[8][ArmaEstado] = !Armas[8][ArmaEstado];armasPers(playerid);}
+		case 9: {Armas[9][ArmaEstado] = !Armas[9][ArmaEstado];armasPers(playerid);}
+		case 10: {Armas[10][ArmaEstado] = !Armas[10][ArmaEstado];armasPers(playerid);}
+		case 11: {Armas[11][ArmaEstado] = !Armas[11][ArmaEstado];armasPers(playerid);}
+		case 12: {Armas[12][ArmaEstado] = !Armas[12][ArmaEstado];armasPers(playerid);}
+		case 13: {Armas[13][ArmaEstado] = !Armas[13][ArmaEstado];armasPers(playerid);}
+		case 14: {Armas[14][ArmaEstado] = !Armas[14][ArmaEstado];armasPers(playerid);}
+		case 15: {Armas[15][ArmaEstado] = !Armas[15][ArmaEstado];armasPers(playerid);}
+		//Iniciar x1
+		case 16: {
+		duelo(playerid);
+		}
+	}
+} else {
+	resetArmas();
+}
+
+
+}
 
 /*==============================================================================
 Aceitar ou não o duelo x1
@@ -248,7 +316,7 @@ Aceitar ou não o duelo x1
 if(dialogid == rBox1) {
  	// ACEITOU O DUELO
     if(response) {
-		if (Xocupado == 1) return SendClientMessage(pConvidou, 0xA9A9A9AA, "[INFO] O x1 já está ocupado. Aguarde até terminar.");
+		//if (Xocupado == 1) return SendClientMessage(pConvidou, 0xA9A9A9AA, "[INFO] O x1 já está ocupado. Aguarde até terminar.");
         SendClientMessageToAll(0x1357FFFF, sprintf("*************** DUELO X1 ***************"));
         SendClientMessageToAll(0x1357FFFF, sprintf("| [X1 %s] O jogador %s aceitou o x1 de %s.", tipoX1, pDesafiadoNome, pConvidouNome));
         SendClientMessageToAll(0x1357FFFF, sprintf("| [Armas] %s", arma));
@@ -279,9 +347,11 @@ if(dialogid == rBox1) {
    	SetPlayerHealth(pDesafiado, 100);
    	SetPlayerTeam(pDesafiado, 255);
 
-	if (tipoX1 = "individual"){
-		GivePlayerWeapon(pConvidou, idarma, 1000);
- 		GivePlayerWeapon(pDesafiado, idarma, 1000);
+	if (strcmpEx(tipoX1, "individual")){
+		darArmas();
+	}
+	if (strcmpEx(tipoX1, "Personalizado")){
+  		darArmas();
 	}
 
     CounterCountdown = 6;
@@ -290,6 +360,7 @@ if(dialogid == rBox1) {
 
 	} else {
         SendClientMessage(pConvidou, 0xA9A9A9AA, "[INFO] O jogador não aceitou o duelo.");
+        resetArmas();
     }
 }
 
@@ -352,19 +423,48 @@ public OnPlayerDeath(playerid, killerid, reason)
     return 1;
 }
 
-public OnGameModeInit()
-{
-    ConnectNPC("[BOT]Pilot", "pilot");
-    return 1;
-}
-
 /*==============================================================================
 FUNÇÕES CRIADAS
 ==============================================================================*/
+strcmpEx(const string1[], const string2[], bool:ignorecase=false, length=cellmax)
+{
+    if((!strlen(string1) && !strlen(string2))) return 0;
+    if((!strlen(string1) || !strlen(string2))) return -1;
+    return strcmp(string1, string2, ignorecase, length);
+}
+
+
+darArmas(){
+
+		for (new i=0; i<15; i++){
+				if (Armas[i][ArmaEstado] == 1){
+ 					GivePlayerWeapon(pConvidou, Armas[i][ArmaID], 1000);
+ 					GivePlayerWeapon(pDesafiado, Armas[i][ArmaID], 1000);
+				}
+		    }
+}
 
 
 duelo(playerid){
-    // O jogador inseriu um ID válido
+
+arma="";
+new buffer[400];
+	if (strcmpEx(tipoX1, "run")){
+	    arma = "9mm Pistol, Sawn-Off Shotgun, Tec9";
+	 SendClientMessageToAll(0xFFFFFFFF, tipoX1, arma);
+	} else if (strcmpEx(tipoX1, "walk")){
+		arma = "Desert Eagle, Shotgun, MP5, AK47, Sniper Rifle";
+		SendClientMessageToAll(0xFFFFFFFF, tipoX1, arma);
+	} else if ( (strcmpEx(tipoX1, "individual")) || (strcmpEx(tipoX1, "Personalizado")) ){
+		for (new i=0; i<15; i++){
+				if (Armas[i][ArmaEstado] == 1){
+					format(buffer, sizeof(buffer), " - %s ", Armas[i][ArmaNome], " - ");
+					strcat(arma, buffer);
+				}
+		    }
+		    SendClientMessageToAll(0xFFFFFFFF, tipoX1, arma);
+	}
+	 // O jogador inseriu um ID válido
     format(texto, sizeof(texto), "Você convidou o jogador %s para um duelo x1. Aguarde pela resposta.", pDesafiadoNome);
 	SendClientMessage(playerid, -1, texto);
     SendClientMessage(playerid, 0xA9A9A9AA, "[AVISO] Se ele não aceitar o convite em 10 segundos, você é spawnado.");
@@ -372,6 +472,7 @@ duelo(playerid){
 	//Mensagem para o convidado
 	GameTextForPlayer(pDesafiado, "~b~~h~Aguardando Resposta~w~...",2000,3);
     ShowPlayerDialog(pDesafiado, rBox1, DIALOG_STYLE_MSGBOX, "X1 - Convite", sprintf("{B9BCCC}- Você foi convidado pelo jogador {6495ED}%s{B9BCCC} para um desafio (x1).\nTipo de x1: {A52A2A}%s\n\n{B9BCCC}Armas: %s \n[Prêmio: R$ ]{B9BCCC} *\n\n - Você aceita?", pConvidouNome, tipoX1, arma), "Sim", "Não");
+
 }
 
 
@@ -386,9 +487,15 @@ resetX1(){
 	pConvidou = -1;
 	pDesafiado = -1;
 	Xocupado = 0;
+	resetArmas();
 	return 1;
 }
 
+resetArmas(){
+    for (new i = 0; i < 15; i++) {
+        Armas[i][ArmaEstado] = 0;
+    }
+}
 
 forward count_x1();
 
@@ -422,4 +529,47 @@ public count_x1()
     return 1;
 }
 
+
+armasPers(playerid){
+	    texto2 = "";
+
+
+format(texto2, sizeof(texto2), "Arma\tEstado\n\
+		{FFFFFF}Chainsaw (Motoserra)\t%s\n\
+		{FFFFFF}Silenced Pistol\t%s\n\
+		{FFFFFF}Pistol\t%s\n\
+		{FFFFFF}Desert Eagle\t%s\n\
+		{FFFFFF}Shotgun\t%s\n\
+		{FFFFFF}Sawn-Off Shotgun\t%s\n\
+		{FFFFFF}Combat Shotgun\t%s\n\
+		{FFFFFF}Tec-9\t%s\n\
+		{FFFFFF}UZI\t%s\n\
+		{FFFFFF}MP5\t%s\n\
+		{FFFFFF}AK-47\t%s\n\
+		{FFFFFF}M4\t%s\n\
+		{FFFFFF}Rifle\t%s\n\
+		{FFFFFF}Sniper Rifle\t%s\n\
+		{FFFFFF}Molotov Cocktail\t%s\n\
+		{FFFFFF}Frag Grenade\t%s\n\
+		{FF00FF}Iniciar x1",
+        (Armas[0][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[1][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[2][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[3][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[4][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[5][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[6][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[7][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[8][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[9][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[10][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[11][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[12][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[13][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[14][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (Armas[15][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"));
+
+  		ShowPlayerDialog(playerid, DIALOG_X1_3, DIALOG_STYLE_TABLIST_HEADERS, "X1 Armas personalizadas", texto2, "Duelo", "Cancelar x1");
+
+}
 
