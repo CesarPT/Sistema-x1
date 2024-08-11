@@ -198,8 +198,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]){
         ShowPlayerDialog(playerid, DIALOG_TIPOSX1, DIALOG_STYLE_LIST, "Tipos X1", "RUN\nWALK\n{FFFF00}Armas individuais\nArmas personalizadas", "Fechar", #);
 
 		return 1;
-        }
+        } else {
+        resetArmas();
         return 1;
+        }
    }
    
 
@@ -328,7 +330,7 @@ if(dialogid == rBox1) {
 		Xocupado = 1;
 
 	//Jogador convidou
-	SetPlayerPos(pConvidou, -1415.230468, 1246.040283, 1040);
+	SetPlayerPos(pConvidou, -1415.230468, 1246.040283, 1040.3010);
     SetPlayerInterior(pConvidou, 16);
     TogglePlayerControllable(pConvidou, false);
    	SetPlayerFacingAngle(pConvidou, 269.655395);
@@ -338,7 +340,7 @@ if(dialogid == rBox1) {
    	SetPlayerTeam(pDesafiado, 254);
 
 	//Jogador desafiado
-    SetPlayerPos(pDesafiado, -1380.088745, 1245.889404, 1040);
+    SetPlayerPos(pDesafiado, -1380.088745, 1245.889404, 1040.3010);
     SetPlayerInterior(pDesafiado, 16);
     TogglePlayerControllable(pDesafiado, false);
    	SetPlayerFacingAngle(pDesafiado, 87.003707);
@@ -390,6 +392,45 @@ if(dialogid == rBox1) {
 /*==============================================================================
 CALLBACKS CRIADAS
 ==============================================================================*/
+
+
+public OnFilterScriptInit()
+{
+//Objects////////////////////////////////////////////////////////////////
+new tmpobjid;
+tmpobjid = CreateObject(18843, -1396.596801, 1245.939086, 1010.615295, 0.000000, 0.000000, 0.000000, 300.00);
+SetObjectMaterial(tmpobjid, 0, 1419, "break_fence3", "CJ_FRAME_Glass", 0x00000000);
+
+tmpobjid = CreateObject(19481, -1396.783691, 1216.280883, 1046.297729, 0.000000, 0.000000, 450.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}Siga Bem Caminhoneiro", 0, 120, "Engravers MT", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.783691, 1276.280883, 1046.297729, 0.000000, 0.000000, 270.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}Siga Bem Caminhoneiro", 0, 120, "Engravers MT", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.903808, 1276.370971, 1046.437866, 0.000000, 0.000000, 270.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{000000}Siga Bem Caminhoneiro", 0, 120, "Engravers MT", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.733642, 1216.140747, 1046.477905, 0.000000, 0.000000, 450.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{000000}Siga Bem Caminhoneiro", 0, 120, "Engravers MT", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.783691, 1216.280883, 1042.797729, 0.000000, 0.000000, 450.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}i", 0, 120, "GTAWEAPON3", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.783691, 1216.280883, 1042.797729, 0.000000, 0.000000, 450.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}i", 0, 120, "GTAWEAPON3", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.783691, 1216.280883, 1042.797729, 0.000000, 0.000000, 630.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}i", 0, 120, "GTAWEAPON3", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.783691, 1216.280883, 1042.797729, 0.000000, 0.000000, 630.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}i", 0, 120, "GTAWEAPON3", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.783691, 1276.280883, 1042.797729, 0.000000, 0.000000, 630.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}i", 0, 120, "GTAWEAPON3", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.783691, 1276.280883, 1042.797729, 0.000000, 0.000000, 810.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}i", 0, 120, "GTAWEAPON3", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.783691, 1276.280883, 1042.797729, 0.000000, 0.000000, 810.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}i", 0, 120, "GTAWEAPON3", 30, 1, 0x00000000, 0x00000000, 1);
+tmpobjid = CreateObject(19481, -1396.783691, 1276.280883, 1042.797729, 0.000000, 0.000000, 630.000000, 300.00);
+SetObjectMaterialText(tmpobjid, "{FFA500}i", 0, 120, "GTAWEAPON3", 30, 1, 0x00000000, 0x00000000, 1);
+
+
+
+    return 1;
+}
+
 
 
 public OnPlayerDisconnect(playerid, reason)
@@ -455,7 +496,7 @@ strcmpEx(const string1[], const string2[], bool:ignorecase=false, length=cellmax
 
 darArmas(){
 
-		for (new i=0; i<15; i++){
+		for (new i=0; i<16; i++){
 				if (Armas[i][ArmaEstado] == 1){
  					GivePlayerWeapon(pConvidou, Armas[i][ArmaID], 1000);
  					GivePlayerWeapon(pDesafiado, Armas[i][ArmaID], 1000);
@@ -475,7 +516,7 @@ new buffer[400];
 		arma = "Desert Eagle, Shotgun, MP5, AK47, Sniper Rifle";
 
 	} else if ( (strcmpEx(tipoX1, "individual") == 0) || (strcmpEx(tipoX1, "Personalizado") == 0) ){
-		for (new i=0; i<15; i++){
+		for (new i=0; i<16; i++){
 				if (Armas[i][ArmaEstado] == 1){
 					format(buffer, sizeof(buffer), " - %s ", Armas[i][ArmaNome], " - ");
 					strcat(arma, buffer);
@@ -511,7 +552,7 @@ resetX1(){
 }
 
 resetArmas(){
-    for (new i = 0; i < 15; i++) {
+    for (new i = 0; i < 16; i++) {
         Armas[i][ArmaEstado] = 0;
     }
 }
