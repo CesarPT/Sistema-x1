@@ -40,9 +40,9 @@ new run[25] = "run", walk[25] = "walk", ind[25] = "individual", pers[25] = "pers
 
 new
     pConvidou = -1,
-    pConvidouNome[MAX_PLAYER_NAME + 1],
+    pConvidouNome[MAX_PLAYER_NAME],
     pDesafiado = -1,
-    pDesafiadoNome[MAX_PLAYER_NAME + 1],
+    pDesafiadoNome[MAX_PLAYER_NAME],
 //Vida e colete
     Float:vida,
     Float:colete,
@@ -102,8 +102,8 @@ new PlayerArmas[MAX_PLAYERS][sizeof Armas][ArmaInfo];
 enum Jogadores {
     idConvidou,
     idDesafiado,
-    nomeConvidou[MAX_PLAYER_NAME + 1],
-    nomeDesafiado[MAX_PLAYER_NAME + 1],
+    nomeConvidou[MAX_PLAYER_NAME],
+    nomeDesafiado[MAX_PLAYER_NAME],
     tipoX1[25]
 }
 
@@ -217,6 +217,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]){
 		Molotov Cocktail\n\
 		Frag Grenade");
 		ShowPlayerDialog(playerid, DIALOG_TIPOSX1_2, DIALOG_STYLE_MSGBOX, "Tipos de X1", texto, "Voltar", "Cancelar");
+
+
 		}
    }
 	return 1;
@@ -345,19 +347,14 @@ Aceitar ou nao o duelo x1
 ==============================================================================*/
 
 if(dialogid == rBox1) {
- 	// ACEITOU O DUELO
- 	pConvidou = mJogadores[playerid][idConvidou];
- 	pDesafiado = mJogadores[playerid][idDesafiado];
-
- 	pConvidouNome = mJogadores[playerid][nomeConvidou];
- 	pDesafiadoNome = mJogadores[playerid][nomeDesafiado];
-
- 	gtipoX1 = mJogadores[playerid][tipoX1];
+  // ACEITOU O DUELO
+  
     if(response) {
+	gtipoX1 = mJogadores[pConvidou][tipoX1];
     Xocupado = 1;
 		//if (Xocupado == 1) return SendClientMessage(pConvidou, 0xA9A9A9AA, "[INFO] O x1 j? est? ocupado. Aguarde at? terminar.");
         SendClientMessageToAll(0x1357FFFF, sprintf("*************** DUELO X1 ***************"));
-        SendClientMessageToAll(0x1357FFFF, sprintf("| [X1 %s] O jogador %s aceitou o x1 de %s.", tipoX1, pDesafiadoNome, pConvidouNome));
+        SendClientMessageToAll(0x1357FFFF, sprintf("| [X1 %s] O jogador %s aceitou o x1 de %s.", gtipoX1, pDesafiadoNome, pConvidouNome));
         SendClientMessageToAll(0x1357FFFF, sprintf("| [Armas] %s", arma));
 
 	//Jogador convidou
@@ -405,10 +402,10 @@ if(dialogid == rBox1) {
 		GivePlayerWeapon(pDesafiado, 34, 1000);
 	}
 	if (strcmpEx(gtipoX1, "individual") == 0){
-		darArmas();
+		darArmas(playerid);
 	}
 	if (strcmpEx(gtipoX1, "Personalizado") == 0){
-  		darArmas();
+  		darArmas(playerid);
 	}
 
     CounterCountdown = 4;
@@ -426,7 +423,7 @@ if(dialogid == rBox1) {
     return 1;
 
 	} else {
-        SendClientMessage(pConvidou, 0xA9A9A9AA, "[INFO] O jogador n?o aceitou o duelo.");
+        SendClientMessage(pConvidou, 0xA9A9A9AA, "[INFO] O jogador não aceitou o duelo.");
         resetArmas();
     }
 }
@@ -555,10 +552,10 @@ strcmpEx(const string1[], const string2[], bool:ignorecase=false, length=cellmax
 }
 
 
-darArmas(){
+darArmas(playerid){
 
 		for (new i=0; i<16; i++){
-				if (Armas[i][ArmaEstado] == 1){
+				if (PlayerArmas[playerid][i][ArmaEstado] == 1){
  					GivePlayerWeapon(pConvidou, Armas[i][ArmaID], 1000);
  					GivePlayerWeapon(pDesafiado, Armas[i][ArmaID], 1000);
 				}
@@ -567,6 +564,18 @@ darArmas(){
 
 
 duelo(playerid){
+    format(texto, sizeof(texto), "Voce convidou o jogador %s para um duelo x1. Aguarde pela resposta.", mJogadores[playerid][nomeDesafiado]);
+	SendClientMessage(playerid, -1, texto);
+    SendClientMessage(playerid, 0xA9A9A9AA, "[AVISO] Se ele nao aceitar o convite em 10 segundos, voce e spawnado.");
+
+    //as variaveis sao setadas como globais
+    pConvidou = mJogadores[playerid][idConvidou];
+    pDesafiado = mJogadores[playerid][idDesafiado];
+    GetPlayerName(pConvidou, pConvidouNome, sizeof(pConvidouNome));
+    GetPlayerName(pDesafiado, pDesafiadoNome, sizeof(pDesafiadoNome));
+    
+    SendClientMessageToAll(0x1357FFFF, sprintf("%d %d %s %s", pConvidou, pDesafiado, pConvidouNome, pDesafiadoNome));
+
 arma="";
 new buffer[400];
 	if (strcmpEx(mJogadores[playerid][tipoX1], "run") == 0){
@@ -584,18 +593,9 @@ new buffer[400];
 		    }
 
 	}
-	 // O jogador inseriu um ID v?lido
-    format(texto, sizeof(texto), "Voce convidou o jogador %s para um duelo x1. Aguarde pela resposta.", mJogadores[playerid][nomeDesafiado]);
-	SendClientMessage(playerid, -1, texto);
-    SendClientMessage(playerid, 0xA9A9A9AA, "[AVISO] Se ele nao aceitar o convite em 10 segundos, voce e spawnado.");
-
-texto = "";
-	format(texto, sizeof(texto), "%s", mJogadores[playerid][nomeDesafiado]);
-	SendClientMessage(playerid, -1, texto);
-	//Mensagem para o convidado
+	//Mensagem para o desafiado
 	GameTextForPlayer(mJogadores[playerid][idDesafiado], "~b~~h~Aguardando Resposta~w~...",2000,3);
     ShowPlayerDialog(mJogadores[playerid][idDesafiado], rBox1, DIALOG_STYLE_MSGBOX, "X1 - Convite", sprintf("{B9BCCC}- Voc? foi convidado pelo jogador {6495ED}%s{B9BCCC} para um desafio (x1).\nTipo de x1: {A52A2A}%s\n\n{B9BCCC}Armas: %s \n[Pr?mio: R$ ]{B9BCCC} *\n\n - Voc? aceita?", mJogadores[playerid][nomeConvidou], mJogadores[playerid][tipoX1], arma), "Sim", "Nao");
-
 }
 
 
@@ -694,6 +694,9 @@ format(texto2, sizeof(texto2), "Arma\tEstado\n\
   		ShowPlayerDialog(playerid, DIALOG_X1_3, DIALOG_STYLE_TABLIST_HEADERS, "X1 Armas personalizadas", texto2, "Duelo", "Cancelar x1");
 
 }
+
+
+
 
 
 
