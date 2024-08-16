@@ -34,8 +34,8 @@
 
 #pragma warning disable 239
 
-new CounterCountdown, timeId;
-new run, walk, ind, pers;
+//Textdraws
+new CounterCountdown, CounterDuel, timeId, timeId2;
 
 //==============================================================================
 
@@ -305,26 +305,86 @@ if(dialogid == DIALOG_X1_2){
 return 1;
 }
 
-
+ // Lógica para verificar se o mesmo tipo de arma pode ser ativada
 if (dialogid == DIALOG_X1_3){
 if (response){
 	switch(listitem){
 		case 0: {PlayerArmas[playerid][0][ArmaEstado] = !PlayerArmas[playerid][0][ArmaEstado];armasPers(playerid);}
-		case 1: {PlayerArmas[playerid][1][ArmaEstado] = !PlayerArmas[playerid][1][ArmaEstado];armasPers(playerid);}
-		case 2: {PlayerArmas[playerid][2][ArmaEstado] = !PlayerArmas[playerid][2][ArmaEstado];armasPers(playerid);}
-		case 3: {PlayerArmas[playerid][3][ArmaEstado] = !PlayerArmas[playerid][3][ArmaEstado];armasPers(playerid);}
-		case 4: {PlayerArmas[playerid][4][ArmaEstado] = !PlayerArmas[playerid][4][ArmaEstado];armasPers(playerid);}
-		case 5: {PlayerArmas[playerid][5][ArmaEstado] = !PlayerArmas[playerid][5][ArmaEstado];armasPers(playerid);}
-		case 6: {PlayerArmas[playerid][6][ArmaEstado] = !PlayerArmas[playerid][6][ArmaEstado];armasPers(playerid);}
-		case 7: {PlayerArmas[playerid][7][ArmaEstado] = !PlayerArmas[playerid][7][ArmaEstado];armasPers(playerid);}
-		case 8: {PlayerArmas[playerid][8][ArmaEstado] = !PlayerArmas[playerid][8][ArmaEstado];armasPers(playerid);}
-		case 9: {PlayerArmas[playerid][9][ArmaEstado] = !PlayerArmas[playerid][9][ArmaEstado];armasPers(playerid);}
-		case 10: {PlayerArmas[playerid][10][ArmaEstado] = !PlayerArmas[playerid][10][ArmaEstado];armasPers(playerid);}
-		case 11: {PlayerArmas[playerid][11][ArmaEstado] = !PlayerArmas[playerid][11][ArmaEstado];armasPers(playerid);}
-		case 12: {PlayerArmas[playerid][12][ArmaEstado] = !PlayerArmas[playerid][12][ArmaEstado];armasPers(playerid);}
-		case 13: {PlayerArmas[playerid][13][ArmaEstado] = !PlayerArmas[playerid][13][ArmaEstado];armasPers(playerid);}
-		case 14: {PlayerArmas[playerid][14][ArmaEstado] = !PlayerArmas[playerid][14][ArmaEstado];armasPers(playerid);}
-		case 15: {PlayerArmas[playerid][15][ArmaEstado] = !PlayerArmas[playerid][15][ArmaEstado];armasPers(playerid);}
+//(pistolas)
+		case 1: {
+        PlayerArmas[playerid][2][ArmaEstado] = false;
+        PlayerArmas[playerid][3][ArmaEstado] = false;
+		PlayerArmas[playerid][1][ArmaEstado] = !PlayerArmas[playerid][1][ArmaEstado];armasPers(playerid);
+		}
+		case 2: {
+		PlayerArmas[playerid][1][ArmaEstado] = false;
+        PlayerArmas[playerid][3][ArmaEstado] = false;
+		PlayerArmas[playerid][2][ArmaEstado] = !PlayerArmas[playerid][2][ArmaEstado];armasPers(playerid);
+		}
+		case 3: {
+		PlayerArmas[playerid][1][ArmaEstado] = false;
+        PlayerArmas[playerid][2][ArmaEstado] = false;
+		PlayerArmas[playerid][3][ArmaEstado] = !PlayerArmas[playerid][3][ArmaEstado];armasPers(playerid);
+		}
+//(shotguns)
+		case 4: {
+		PlayerArmas[playerid][5][ArmaEstado] = false;
+        PlayerArmas[playerid][6][ArmaEstado] = false;
+		PlayerArmas[playerid][4][ArmaEstado] = !PlayerArmas[playerid][4][ArmaEstado];armasPers(playerid);
+		}
+		case 5: {
+		PlayerArmas[playerid][4][ArmaEstado] = false;
+        PlayerArmas[playerid][6][ArmaEstado] = false;
+		PlayerArmas[playerid][5][ArmaEstado] = !PlayerArmas[playerid][5][ArmaEstado];armasPers(playerid);
+		}
+		case 6: {
+		PlayerArmas[playerid][4][ArmaEstado] = false;
+        PlayerArmas[playerid][5][ArmaEstado] = false;
+		PlayerArmas[playerid][6][ArmaEstado] = !PlayerArmas[playerid][6][ArmaEstado];armasPers(playerid);
+		}
+//(metrelhadoras)
+		case 7: {
+		PlayerArmas[playerid][8][ArmaEstado] = false;
+        PlayerArmas[playerid][9][ArmaEstado] = false;
+		PlayerArmas[playerid][7][ArmaEstado] = !PlayerArmas[playerid][7][ArmaEstado];armasPers(playerid);
+		}
+		case 8: {
+		PlayerArmas[playerid][7][ArmaEstado] = false;
+        PlayerArmas[playerid][9][ArmaEstado] = false;
+		PlayerArmas[playerid][8][ArmaEstado] = !PlayerArmas[playerid][8][ArmaEstado];armasPers(playerid);
+		}
+		case 9: {
+		PlayerArmas[playerid][7][ArmaEstado] = false;
+        PlayerArmas[playerid][8][ArmaEstado] = false;
+		PlayerArmas[playerid][9][ArmaEstado] = !PlayerArmas[playerid][9][ArmaEstado];armasPers(playerid);
+		}
+//(ak47 e m4)
+		case 10: {
+		PlayerArmas[playerid][11][ArmaEstado] = false;
+		PlayerArmas[playerid][10][ArmaEstado] = !PlayerArmas[playerid][10][ArmaEstado];armasPers(playerid);
+		}
+		case 11: {
+		PlayerArmas[playerid][10][ArmaEstado] = false;
+		PlayerArmas[playerid][11][ArmaEstado] = !PlayerArmas[playerid][11][ArmaEstado];armasPers(playerid);
+		}
+//(rifles)
+		case 12: {
+		PlayerArmas[playerid][13][ArmaEstado] = false;
+		PlayerArmas[playerid][12][ArmaEstado] = !PlayerArmas[playerid][12][ArmaEstado];armasPers(playerid);
+		}
+		case 13: {
+		PlayerArmas[playerid][12][ArmaEstado] = false;
+		PlayerArmas[playerid][13][ArmaEstado] = !PlayerArmas[playerid][13][ArmaEstado];armasPers(playerid);
+		}
+//(especiais)
+		case 14: {
+		PlayerArmas[playerid][15][ArmaEstado] = false;
+		PlayerArmas[playerid][14][ArmaEstado] = !PlayerArmas[playerid][14][ArmaEstado];armasPers(playerid);
+		}
+		case 15: {
+		PlayerArmas[playerid][14][ArmaEstado] = false;
+		PlayerArmas[playerid][15][ArmaEstado] = !PlayerArmas[playerid][15][ArmaEstado];armasPers(playerid);
+		}
 		//Iniciar x1
 		case 16: {
 		duelo(playerid);
@@ -370,7 +430,7 @@ if(dialogid == rBox1) {
     SetPlayerTeam(pDesafiado, 255);
    	SetPlayerHealth(pDesafiado, 100);
    	SetPlayerTeam(pDesafiado, 255);
-   	
+
    	if(x1colete == 1){
 	SetPlayerArmour(pConvidou, 100);
 	SetPlayerArmour(pDesafiado, 100);
@@ -406,15 +466,8 @@ if(dialogid == rBox1) {
 
     CounterCountdown = 4;
     timeId = SetTimer("count_x1", 1000, true);
-
-	Minutos = 2;  //2min
-	TempoMinutos = SetTimer("MinutosDuelo", 1000, true);
     TextDrawShowForPlayer(pDesafiado, TempoRestante);
     TextDrawShowForPlayer(pConvidou, TempoRestante);
-    TextDrawShowForPlayer(pDesafiado, dMinutos);
-    TextDrawShowForPlayer(pConvidou, dMinutos);
-
-
 
     return 1;
 
@@ -591,10 +644,10 @@ new buffer[400];
 		    }
 
 	}
-	
+
 	//Mensagem para o desafiado
 	GameTextForPlayer(mJogadores[playerid][idDesafiado], "~b~~h~Aguardando Resposta~w~...",2000,3);
-    ShowPlayerDialog(mJogadores[playerid][idDesafiado], rBox1, DIALOG_STYLE_MSGBOX, "X1 - Convite", sprintf("{B9BCCC}- Você foi convidado pelo jogador {6495ED}%s{B9BCCC} para um desafio (x1).\nTipo de x1: {A52A2A}%s\n\n{B9BCCC}Armas: %s \n[Prémio: R$ ]{B9BCCC} *\n\n - Aceita o duelo?", mJogadores[playerid][nomeConvidou], gtipoX1, arma), "Sim", "Nao");
+    ShowPlayerDialog(mJogadores[playerid][idDesafiado], rBox1, DIALOG_STYLE_MSGBOX, "X1 - Convite", sprintf("{B9BCCC}- Você foi convidado pelo jogador {6495ED}%s{B9BCCC} para um desafio (x1).\nTipo de x1: {A52A2A}%s\n\n{B9BCCC}Armas: %s \n[Prémio: R$ ]{B9BCCC} *\n\n - Aceita o duelo?", mJogadores[playerid][nomeConvidou], gtipoX1, arma), "Sim", "Não");
 }
 
 
@@ -605,10 +658,14 @@ resetX1(playerid){
 	SetPlayerInterior(pDesafiado, 0);
     TextDrawHideForPlayer(pConvidou, TempoRestante);
     TextDrawHideForPlayer(pConvidou, dMinutos);
+    TextDrawHideForPlayer(pDesafiado, TempoRestante);
+    TextDrawHideForPlayer(pDesafiado, dMinutos);
+   	resetArmas(pConvidou);
 	pConvidou = -1;
 	pDesafiado = -1;
+	KillTimer(timeId);
+	KillTimer(timeId2);
 	Xocupado = 0;
-	resetArmas(playerid);
 	return 1;
 }
 
@@ -618,6 +675,58 @@ resetArmas(playerid){
         PlayerArmas[playerid][i][ArmaEstado] = 0;
     }
 }
+
+
+armasPers(playerid){
+
+    new texto2[1024];
+
+    // Monta o texto final para o diálogo com a lógica atualizada
+    format(texto2, sizeof(texto2),
+        "Arma\tEstado\n\
+        {FFFFFF}Chainsaw (Motoserra)\t%s\n\
+        {FFFFFF}Silenced Pistol\t%s\n\
+        {FFFFFF}Pistol\t%s\n\
+        {FFFFFF}Desert Eagle\t%s\n\
+        {FFFFFF}Shotgun\t%s\n\
+        {FFFFFF}Sawn-Off Shotgun\t%s\n\
+        {FFFFFF}Combat Shotgun\t%s\n\
+        {FFFFFF}Tec-9\t%s\n\
+        {FFFFFF}UZI\t%s\n\
+        {FFFFFF}MP5\t%s\n\
+        {FFFFFF}AK-47\t%s\n\
+        {FFFFFF}M4\t%s\n\
+        {FFFFFF}Rifle\t%s\n\
+        {FFFFFF}Sniper Rifle\t%s\n\
+        {FFFFFF}Molotov Cocktail\t%s\n\
+        {FFFFFF}Frag Grenade\t%s\n\
+        {FF00FF}Iniciar x1",
+        (PlayerArmas[playerid][0][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][1][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][2][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][3][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][4][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][5][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][6][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][7][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][8][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][9][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][10][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][11][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][12][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][13][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][14][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
+        (PlayerArmas[playerid][15][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n")
+    );
+
+    // Mostra o diálogo com as informações das armas
+    ShowPlayerDialog(playerid, DIALOG_X1_3, DIALOG_STYLE_TABLIST_HEADERS, "X1 Armas personalizadas", texto2, "Duelo", "Cancelar x1");
+}
+
+
+
+
+
 
 forward count_x1();
 
@@ -646,58 +755,44 @@ public count_x1()
         TogglePlayerControllable(pConvidou, true);
         TogglePlayerControllable(pDesafiado, true);
         KillTimer(timeId);
+
+		CounterDuel = 120;
+	    timeId2 = SetTimer("count_duel", 1000, true);
+		TextDrawShowForPlayer(pDesafiado, dMinutos);
+	    TextDrawShowForPlayer(pConvidou, dMinutos);
         return 1;
     }
     return 1;
 }
 
 
-armasPers(playerid){
-	    texto2 = "";
+forward count_duel();
+
+public count_duel()
+{
+    new string[20];
 
 
-format(texto2, sizeof(texto2), "Arma\tEstado\n\
-		{FFFFFF}Chainsaw (Motoserra)\t%s\n\
-		{FFFFFF}Silenced Pistol\t%s\n\
-		{FFFFFF}Pistol\t%s\n\
-		{FFFFFF}Desert Eagle\t%s\n\
-		{FFFFFF}Shotgun\t%s\n\
-		{FFFFFF}Sawn-Off Shotgun\t%s\n\
-		{FFFFFF}Combat Shotgun\t%s\n\
-		{FFFFFF}Tec-9\t%s\n\
-		{FFFFFF}UZI\t%s\n\
-		{FFFFFF}MP5\t%s\n\
-		{FFFFFF}AK-47\t%s\n\
-		{FFFFFF}M4\t%s\n\
-		{FFFFFF}Rifle\t%s\n\
-		{FFFFFF}Sniper Rifle\t%s\n\
-		{FFFFFF}Molotov Cocktail\t%s\n\
-		{FFFFFF}Frag Grenade\t%s\n\
-		{FF00FF}Iniciar x1",
-        (PlayerArmas[playerid][0][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][1][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][2][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][3][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][4][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][5][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][6][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][7][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][8][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][9][ArmaEstado]? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][10][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][11][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][12][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][13][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][14][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"),
-        (PlayerArmas[playerid][15][ArmaEstado] ? "{00FF00}Ativado\n" : "{FF0000}Desativado\n"));
+    if(CounterDuel > 0)
+    {
+        CounterDuel--;
 
-  		ShowPlayerDialog(playerid, DIALOG_X1_3, DIALOG_STYLE_TABLIST_HEADERS, "X1 Armas personalizadas", texto2, "Duelo", "Cancelar x1");
+		// Converter o CounterDuel em minutos e segundos
+        new minutos = CounterDuel / 60;
+        new segundos = CounterDuel % 60;
 
+		format(string, sizeof(string), "~w~%02d:%02d", minutos, segundos);
+
+		TextDrawSetString(dMinutos, string);
+    }
+
+    if(CounterDuel == 0)
+    {
+        SendClientMessageToAll(0xFFFFFFFF, "[X1] Terminou o tempo, ninguém venceu.");
+        TextDrawHideForAll(dMinutos);
+        TextDrawDestroy(dMinutos);
+		resetX1();
+        return 1;
+    }
+    return 1;
 }
-
-
-
-
-
-
-
