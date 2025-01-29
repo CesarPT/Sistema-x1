@@ -37,22 +37,7 @@ new CounterCountdown, CounterDuel, timeId, timeId2;
 //==============================================================================
 
 new
-    pConvidou = -1,
-    pConvidouNome[MAX_PLAYER_NAME],
-    pDesafiado = -1,
-    pDesafiadoNome[MAX_PLAYER_NAME],
-//Vida e colete
-    Float:vida,
-    Float:colete,
-	vConvidou,
-	cConvidou,
-	vDesafiado,
-	cDesafiado,
-//Valores do x1
-    Xocupado,
-    x1colete = 1,
-    gtipoX1[144],
-	arma[200],
+	countF,
 	texto[1024],
 	texto2[1024],
  	TempoSpawn[MAX_PLAYERS],
@@ -67,6 +52,7 @@ new
 	estado
 ;
 
+new bool:gOnCheck[MAX_PLAYERS];
 
 // MATRIZES
 
@@ -81,9 +67,9 @@ enum Jogadores {
 new mJogadores[MAX_PLAYERS][Jogadores];
 
 enum ChecksCampo1 {
-    x,
-    y,
-    z
+    xCor,
+    yCor,
+    zCor
 };
 
 new Checks[][ChecksCampo1] = {
@@ -95,7 +81,12 @@ new Checks[][ChecksCampo1] = {
 // Matriz das armas x1
 new PlayerChecks[MAX_PLAYERS][sizeof Checks][ChecksCampo1];
 
+new float:xSiloCor=-151.157150, float:ySiloCor=-90.849273, float:zSiloCor=3.11787;
 
+CMD:teleport(playerid)
+{
+   resetT();
+}
 
 CMD:ct(playerid)
 {
@@ -103,14 +94,14 @@ if (mJogadores[playerid][BlockT] != 0){
    resetT();
     SendClientMessage(playerid, 0xFF55FF55, "Cancelou o trabalho de fazendeiro.");
 } else {
-	SendClientMessage(playerid, 0xFF55FF55, "[ERRO] Não tem nenhum trabalho em aberto.");
+	SendClientMessage(playerid, 0xFF55FF55, "[ERRO] Nao tem nenhum trabalho em aberto.");
 }
 }
 
 
 CMD:t(playerid, params[]){
 
-	//Verificações
+	//Verificaçoes
 	if(mJogadores[playerid][BlockT] == 1) return SendClientMessage(playerid, -1, "{FFFF00}[ERRO] {FF0000}Já iniciou o trabalho. Plante com o trator e o acoplado");
 
 	mJogadores[playerid][idT] = playerid;
@@ -119,10 +110,10 @@ CMD:t(playerid, params[]){
 	new texto[1024];
 	format(texto, sizeof(texto),
     "{FFFFFF}Café\tCampo 1\n\
-     {FFFFFF}Algodão\tCampo 2");
+     {FFFFFF}Algodao\tCampo 2");
 
 
-	ShowPlayerDialog(playerid, DIALOG_TFAZENDEIRO, DIALOG_STYLE_TABLIST, "Selecione uma plantação",texto,"Comecar", "Sair");
+	ShowPlayerDialog(playerid, DIALOG_TFAZENDEIRO, DIALOG_STYLE_TABLIST, "Selecione uma plantaçao",texto,"Comecar", "Sair");
 	return 1;
 }
 
@@ -145,17 +136,17 @@ if(dialogid == DIALOG_TFAZENDEIRO)
 
 		format(texto, sizeof(texto), "Vá até ao campo %s e plante %s", mJogadores[playerid][campo], mJogadores[playerid][tipoPlanta]);
 		SendClientMessage(playerid, -1, texto);
-		
 
-		format(texto, sizeof(texto), "Check 1: %f %s %d", PlayerChecks[playerid][0][x], PlayerChecks[playerid][0][x], PlayerChecks[playerid][0][x]);
-		SendClientMessage(playerid, -1, texto);
-		
-		SetPlayerCheckpoint(playerid, PlayerChecks[playerid][0][x], PlayerChecks[playerid][0][y], PlayerChecks[playerid][0][z], 5.0);
+		countF=0;
+		new float:x=Checks[countF][xCor], float:y=Checks[countF][yCor], float:z=Checks[countF][zCor];
+		SetPlayerCheckpoint(playerid, x, y, z, 5.0);
+        gOnCheck[playerid] = true;
+
 		}
 		case 1: {
 		mJogadores[playerid][BlockT] = 1;
 		format(mJogadores[playerid][campo], 10, "2");
-		format(mJogadores[playerid][tipoPlanta], 50, "Algodão");
+		format(mJogadores[playerid][tipoPlanta], 50, "Algodao");
 
 		format(texto, sizeof(texto), "Vá até ao campo %s e plante %s", mJogadores[playerid][campo], mJogadores[playerid][tipoPlanta]);
 		SendClientMessage(playerid, -1, texto);
@@ -177,6 +168,35 @@ return 0;
 /*==============================================================================
 CALLBACKS CRIADAS
 ==============================================================================*/
+
+public OnPlayerEnterCheckpoint(playerid)
+{
+    if (gOnCheck[playerid]) // se entrou no checkpoint
+    {
+        DisablePlayerCheckpoint(playerid);
+        gOnCheck[playerid] = false;
+
+        //avança para o próximo enquanto nao for o ultimo
+        if(countF < 3) {
+		new float:x=Checks[countF][xCor], float:y=Checks[countF][yCor], float:z=Checks[countF][zCor];
+        SetPlayerCheckpoint(playerid, x, y, z, 5.0);
+        gOnCheck[playerid] = true;
+        	countF++;
+        } else if (countF == 3) {
+   		 //caso chegue ao ultimo recolher o trator
+        SendClientMessage(playerid, -1, "Vá até ao silo para guardar o seu trator.");
+        SetPlayerCheckpoint(playerid, xSiloCor, ySiloCor, zSiloCor, 5.0);
+        gOnCheck[playerid] = true;
+			countF++;
+		} else if (countF == 4){
+		SendClientMessageToAll(-1, "O Fazendeiro %s semeou uma plantação de café.");
+        SendClientMessage(playerid, -1, "Espere até que a sua plantação cresca para depois colher.");
+		}
+
+
+    }
+    return 1;
+}
 
 
 public OnFilterScriptInit()
@@ -254,7 +274,7 @@ public OnPlayerDeath(playerid, killerid, reason)
 }
 
 /*==============================================================================
-FUNÇÕES CRIADAS
+FUNÇOES CRIADAS
 ==============================================================================*/
 strcmpEx(const string1[], const string2[], bool:ignorecase=false, length=cellmax)
 {
@@ -273,4 +293,5 @@ resetT(playerid){
 	mJogadores[playerid][BlockT] = 0;
 	return 1;
 }
+
 
